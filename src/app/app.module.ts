@@ -14,10 +14,13 @@ import {NotFoundComponent} from "./Shared/not-found/not-found.component";
 import {ResetPasswordComponent} from "./UserAccount/reset-password/reset-password.component";
 import { ToastrModule } from 'ngx-toastr';
  import { SettingsAnalaysisComponent } from './Biologiste/settings-analaysis/settings-analaysis.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { DataTablesModule } from "angular-datatables";
-import { ListRequestAnalysisComponent } from './Medecin/list-request-analysis/list-request-analysis.component';
-import { AddRequestAnalysisComponent } from './Medecin/add-request-analysis/add-request-analysis.component';
+import {JwtInterceptor} from "./Services/AuthenticationConfig/jwt.interceptor";
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
+import { RetrieveUsersComponent } from './UserAccount/retrieve-users/retrieve-users.component';
+import {ErrorInterceptorService} from "./Helper/error-interceptor.service";
+
 
 
 @NgModule({
@@ -31,8 +34,7 @@ import { AddRequestAnalysisComponent } from './Medecin/add-request-analysis/add-
     NotFoundComponent,
     ResetPasswordComponent,
     SettingsAnalaysisComponent,
-    ListRequestAnalysisComponent,
-    AddRequestAnalysisComponent
+    RetrieveUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -43,13 +45,20 @@ import { AddRequestAnalysisComponent } from './Medecin/add-request-analysis/add-
     HttpClientModule,
     DataTablesModule
   ],
-  providers: [  {
+  providers: [
+    {provide: HTTP_INTERCEPTORS,
+  useClass: ErrorInterceptorService,
+  multi: true},
+    {
     provide: WebSocketServiceService,
     useFactory: (client: Client) => {
       return new WebSocketServiceService(client);
     },
     deps: [Client]
   },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService, // add JwtHelperService to the providers array
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: Client,
       useValue: Stomp.client('ws://localhost:9999/socket')

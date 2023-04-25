@@ -24,7 +24,7 @@
                 </div>
                 <h2>S'authentifier</h2>
 
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
                   <div class="form-group">
                     <label>Nom d'utilisateur <span class="login-danger">*</span></label>
                     <input class="form-control" formControlName="username" type="text">

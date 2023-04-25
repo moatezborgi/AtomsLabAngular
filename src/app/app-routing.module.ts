@@ -6,7 +6,7 @@ import {ChatComponent} from "./chat/chat.component";
 import {NotFoundComponent} from "./Shared/not-found/not-found.component";
 import {ResetPasswordComponent} from "./UserAccount/reset-password/reset-password.component";
  import {SettingsAnalaysisComponent} from "./Biologiste/settings-analaysis/settings-analaysis.component";
-import {AddRequestAnalysisComponent} from "./Medecin/add-request-analysis/add-request-analysis.component";
+import {RetrieveUsersComponent} from "./UserAccount/retrieve-users/retrieve-users.component";
 
 const routes: Routes = [
   {
@@ -36,12 +36,11 @@ const routes: Routes = [
     path:"resetpassword",
     component:ResetPasswordComponent
   },{
-    path:"analysissettings",
+    path:"SettingsAnalaysis",
     component:SettingsAnalaysisComponent
-  },
-  {
-    path:"addrequestanalysis",
-    component:AddRequestAnalysisComponent
+  },{
+    path:"users",
+    component:RetrieveUsersComponent
   }
 ];
 

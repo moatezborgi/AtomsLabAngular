@@ -16,22 +16,16 @@
       <div class="col-md-6">
         <div class="card-box">
           <h4 class="card-title">Saisissez le type de prélèvement à ajouter</h4>
-          <form [formGroup]="prelevForm"  (ngSubmit)="ajouterPrelev(prelevForm.value)">
+          <form action="#">
             <div class="form-group row">
               <label class="col-md-3 col-form-label">Description de prélèvement:</label>
-
               <div class="col-md-9">
-                <input formControlName="descprelev" type="text" class="form-control">
-                <div *ngIf="prelevForm.get('descprelev')?.['touched'] && prelevForm.get('descprelev')?.['invalid']">
-                  <div class="invalid-tooltip" *ngIf="prelevForm.get('descprelev')?.errors?.['required']">
-                    Ce champ est obligatire
-                  </div>
-                </div>
-               </div>
+                <input type="text" class="form-control">
+              </div>
             </div>
 
             <div class="text-end">
-              <button type="submit" class="btn btn-primary" [disabled]="prelevForm.invalid">Ajouter</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
             </div>
           </form>
         </div>
@@ -62,17 +56,4 @@
     </div>
   </div>
 
-</div>
-<div id="delete_patient" class="modal fade delete-modal" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <img src="assets/img/sent.png" alt="" width="50" height="46">
-        <h3>Are you sure want to delete this ?</h3>
-        <div class="m-t-20"> <a href="#" class="btn btn-white" data-bs-dismiss="modal">Close</a>
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

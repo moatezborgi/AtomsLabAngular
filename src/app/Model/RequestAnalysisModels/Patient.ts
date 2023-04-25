@@ -2,11 +2,11 @@ import {RequestAnalysis} from "./RequestAnalysis";
 
 export interface Patient {
   index_patient: string;
-  fname: string;
-  lname: string;
+  fName: string;
+  lName: string;
   dateofbirth: string;
   gsm: string;
   height: number;
   weight: number;
-  //requestAnalysisList: RequestAnalysis[];
+  requestAnalysisList: RequestAnalysis[];
 }

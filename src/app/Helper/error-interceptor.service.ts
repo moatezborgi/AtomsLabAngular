@@ -14,7 +14,9 @@ export class ErrorInterceptorService {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 || error.status === 403) {
           // Redirige vers la page de connexion si l'utilisateur est non authentifié ou pas autorisé
-         } else {
+          this.router.navigate(['/error'], { state: { code: error.status, message: error.message } });
+
+        } else {
            this.router.navigate(['/error'], { state: { code: error.status, message: error.message } });
         }
         return throwError(error);

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {SamplingType} from "../../Model/RequestAnalysisModels/SamplingType";
-import {map, Observable} from "rxjs";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +17,4 @@ export class SettingsAnalysisServiceService {
     return this.http.get<SamplingType[]>(this.baseUrl+'retrieveAllSamplingType');
 
   }
-  addSamplingType(samplingtype: string): Observable<HttpResponse<any>> {
-    const data = { descSampling: samplingtype };
-    return this.http.post(this.baseUrl + 'addSamplingType', data, { observe: 'response' }).pipe(
-      map(response => {
-        return response;
-      })
-    );
-  }
-
 }
