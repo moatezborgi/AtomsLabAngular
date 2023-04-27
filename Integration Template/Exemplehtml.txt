@@ -1,0 +1,31 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Prise en charge des paramètres biochimiques</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+-----------------------------------
+
+implémentez le code içi
+
+-------------------------------------
+
+
+ </div>
+
+</div>
+
+
+
+
+--------------------------- npm commande-------------------------------------------------
+npm install sweetalert2

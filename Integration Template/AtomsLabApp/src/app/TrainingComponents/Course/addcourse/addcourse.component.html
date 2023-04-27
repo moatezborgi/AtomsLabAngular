@@ -1,0 +1,70 @@
+<div class="page-wrapper" xmlns="http://www.w3.org/1999/html">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Add Course</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form #d="ngForm">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-heading">
+                    <h4>Ajouter Cours</h4>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>idcourse<span class="login-danger">*</span></label>
+                    <input name="nameReactif" ngModel class="form-control" type="text" placeholder="id course">
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>description<span class="login-danger">*</span></label>
+                    <input name="unit" ngModel class="form-control" type="text" placeholder="donner une description pr le course">
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-6">
+                <div class="form-group local-forms">
+                  <label>name<span class="login-danger">*</span></label>
+                  <input name="unit" ngModel class="form-control" type="text" placeholder="cursus name">
+                </div>
+              </div>
+            </form>
+          <div class="col-12 col-md-6 col-xl-6">
+            <div class="form-group local-forms">
+              <label>fileUrl<span class="login-danger">*</span></label>
+              <input name="unit" ngModel class="form-control" type="text" placeholder="donner url">
+            </div>
+          </div>
+        </div>
+
+              <div class="col-12">
+                <div class="doctor-submit text-end">
+                  <button type="submit" class="btn btn-primary submit-form me-2" (click)="add(d.value)">Ajouter </button>
+                  <button routerLink="/ReactifList" type="submit" class="btn btn-primary cancel-form">Annuler</button>
+                </div>
+              </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+</div>
