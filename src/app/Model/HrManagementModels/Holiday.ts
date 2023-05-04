@@ -6,13 +6,13 @@ export interface Holiday {
   endDate: Date;
   reason: string;
    status: boolean;
-  paid: boolean;
-  type: TypeHoliday ;
   user: User;
+  typeHoliday: TypeHoliday;
+  paid: boolean;
 }
-enum TypeHoliday {
-  Annuel='annuel',
-  Maladie='maladie',
-  Maternité='maternité',
-  Paternité='paternité'
+export enum TypeHoliday {
+  Annuel='Annuel',
+  Maladie='Maladie',
+  Maternité='Maternité',
+  Paternité='Paternité'
 }

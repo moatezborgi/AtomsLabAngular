@@ -8,7 +8,11 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import Swal from 'sweetalert2';
 import { format } from 'date-fns';
 import {HolidayService} from "../../../Services/HrManager/Holiday/holiday.service";
-import {data} from "jquery";
+import {DutyService} from "../../../Services/HrManager/Duty/duty.service";
+
+import {data, event} from "jquery";
+import {ActivatedRoute} from "@angular/router";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-calendar',
@@ -22,28 +26,46 @@ export class CalendarComponent implements OnInit {
   usernameSearch = "";
 
   calendarOptions: CalendarOptions = {
+
     initialView: "dayGridMonth",
+    views: {
+      timeGridFourDay: {
+        type: 'timeGrid',
+        duration: { days: 4 }
+      },
+      dayGrid: {
+        displayEventTime: true
+      }
+    },
     headerToolbar: {
       center: "title",
       end: "dayGridMonth,timeGridWeek,timeGridDay",
       start: "prev,next today",
     },
+    slotLabelFormat: {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    },
     plugins: [dayGridPlugin, listPlugin,timeGridPlugin, interactionPlugin],
-
+    editable: true,
+    selectable: true,
     events: [],
     eventClick: (info) => {
       // Get the event object
       const event = info.event;
+
       // Populate the form fields with the event details
       this.calendarForm.patchValue({
         idHoliday: parseInt(event.id),
         reason: event.title,
         startDate: event.start,
-        endDate: event.end
+        endDate: event.end,
       });
 
       // Change the action to "update" instead of "new"
-      this.action = "update";
+      this.deleteEvent(event.id);
+      console.log(event.id);
     },
     eventDrop: (info) => {
       const event = info.event;
@@ -52,19 +74,22 @@ export class CalendarComponent implements OnInit {
         idHoliday: parseInt(event.id),
         reason: event.title,
         startDate: event.start,
-        endDate: event.end
+        endDate: event.end || event.start, // Set endDate to startDate if it's null
       });
       this.updateEvent();
-    }
 
-
+    },
   };
+  username: any;
 
-  constructor(
-    private eventsApi: HolidayService
-  ) {}
+  constructor(private aRoute:ActivatedRoute,
+    private eventsApi: HolidayService,
+  private eventsApi1: DutyService
+
+) {}
 
   ngOnInit(): void {
+
     this.calendarForm = new FormGroup({
       idHoliday: new FormControl(""),
       reason: new FormControl("", Validators.required),
@@ -74,8 +99,10 @@ export class CalendarComponent implements OnInit {
     this.usernameForm = new FormGroup({
       username: new FormControl("")
     });
-    this.getAllEvents(this.usernameSearch);
+    this.username=this.aRoute.snapshot.params['username']
+    this.getAllEvents(this.username);
   }
+
   initForm(){
     this.calendarForm.patchValue({
       idHoliday: "",
@@ -86,7 +113,7 @@ export class CalendarComponent implements OnInit {
     this.action="Add";
   }
 
-  deleteEvent(){
+  deleteEvent(id:any){
     Swal.fire({
       title: 'Are you sure want to remove this Event?',
       text: 'You will not be able to recover this Event!',
@@ -98,7 +125,7 @@ export class CalendarComponent implements OnInit {
     }).then(async (result) => {
       if (result.value) {
         //delete Event confirmation
-        await this.deleteFunction();
+        await this.deleteFunction(id);
         Swal.fire(
           'Deleted!',
           'Your Event has been deleted.',
@@ -149,8 +176,10 @@ export class CalendarComponent implements OnInit {
     this.eventsApi.addassignHoliday(this.calendarForm.value).subscribe(
       (res) => {
         console.log(this.calendarForm.value);
+        this.username=this.aRoute.snapshot.params['username']
+
         //get all events from database and assign them to calender events list
-        this.getAllEvents(this.usernameSearch);
+        this.getAllEvents(this.username);
       },
       (error) => {
         console.log(error);
@@ -165,7 +194,8 @@ export class CalendarComponent implements OnInit {
     this.eventsApi.UpdateHoliday(this.calendarForm.value,this.calendarForm.value.idHoliday).subscribe(
       (res) => {
         console.log("res ",res)
-        this.getAllEvents(this.usernameSearch);
+        this.username=this.aRoute.snapshot.params['username']
+        this.getAllEvents(this.username);
         if(res == null){
           console.log("here cond")
           this.alertcannotUpdatetWithSuccess();
@@ -184,11 +214,45 @@ export class CalendarComponent implements OnInit {
       }
     );
   }
+  updateEvent1(){
+    this.eventsApi1.updateDutydate(this.calendarForm.value,this.calendarForm.value.id).subscribe(
+      (res) => {
+        console.log("res ",res)
+        this.username=this.aRoute.snapshot.params['username']
+        this.getAllEvents(this.username);
+        if(res == null){
+          console.log("here cond")
+          this.alertcannotUpdatetWithSuccess();
+        }
+        else {
+          this.alertUpdatetWithSuccess();
+        }
+      },
+      (error) => {
+        console.log("error : ",error);
 
-  async deleteFunction(){
-    this.eventsApi.deleteHoliday(this.calendarForm.value.idEvent).subscribe(
+
+      },
+      async () => {
+
+      }
+    );
+  }
+  async deleteFunction(id:any){
+    this.username=this.aRoute.snapshot.params['username']
+    this.eventsApi.deleteHoliday(id).subscribe(
       res=>{
-        this.getAllEvents(this.usernameSearch);
+
+        this.getAllEvents(this.username);
+      },error=>{
+        console.log(error);
+      },()=>{
+        this.initForm();
+      }
+    )
+    this.eventsApi1.deleteDuty(this.calendarForm.value.idEvent).subscribe(
+      res=>{
+        this.getAllEvents(this.username);
       },error=>{
         console.log(error);
       },()=>{
@@ -197,34 +261,75 @@ export class CalendarComponent implements OnInit {
     )
   }
 
-  getAllEvents(username:any) {
-    if(this.usernameSearch != "")
-    {
-      this.eventsApi.HolidaylistbyUser(username).subscribe(
-        (res) => {
-          this.calendarOptions.events = res.map((event) => {
-            return {
-              id: event.idHoliday.toString(),
-              title: event.reason,
-              start: new Date(event.startDate),
-              end: new Date(event.endDate),
-              editable: true,
-              droppable: true,
-              isEndResizable: true,
-              isStartResizable: true,
-            };
-          });
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {}
-      );
-    }
+  getAllEvents(username: any) {
+    const holidayEvents$ = this.eventsApi.HolidaylistbyUser(username);
+    const taskEvents$ = this.eventsApi1.DutylistbyUser(username);
+    // merge the results of both observables
+    forkJoin([holidayEvents$, taskEvents$]).subscribe(
+      (results) => {
+        const [holidayEvents, taskEvents] = results;
+
+        const allEvents = [
+          ...holidayEvents.map((event) => ({
+            id: event.idHoliday.toString(),
+            color: 'red',
+            title: event.typeHoliday,
+            desciption: event.reason,
+            status: event.status,
+            start: new Date(event.startDate),
+            end: new Date(event.endDate),
+            editable: true,
+            droppable: true,
+            isEndResizable: true,
+            isStartResizable: true,
+            borderColor: 'black',
+            textColor: 'white',
+            resizable: true,
+            // Filter out events where the endDate is not equal to the startDate
+            allDay: event.startDate === event.endDate ? true : false,
+          //  allDay: false,
+
+          })),
+          ...taskEvents.map((task) => ({
+            id: task.idPlanificationDuty.toString(),
+            color: 'blue',
+            title: task.duty.type,
+            status: task.isActive,
+            start: new Date(task.duty.dateHeureDebut),
+            end: new Date(task.duty.dateHeureFin),
+            editable: false,
+            droppable: false,
+            isEndResizable: false,
+            isStartResizable: false,
+            borderColor: 'black',
+            textColor: 'white',
+            resizable: true,
+            // Filter out events where the endDate is not equal to the startDate
+            allDay: task.duty.dateHeureDebut === task.duty.dateHeureFin ? true : false,
+          })),
+        ];
+        // Adjust start and end times for all-day events
+        for (let i = 0; i < allEvents.length; i++) {
+          const event = allEvents[i];
+          if (event.start.getDate() === event.end.getDate()) {
+            event.start.setDate(event.start.getDate()+1);
+            event.end.setDate(event.end.getDate()+1);
+            event.allDay = true;
+          }
+        }
+
+        this.calendarOptions.events = allEvents;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
+
 
   handleSearch(){
     this.usernameSearch = this.usernameForm.value.username
-    this.getAllEvents(this.usernameSearch)
+    this.username=this.aRoute.snapshot.params['username']
+    this.getAllEvents(this.username)
   }
 }

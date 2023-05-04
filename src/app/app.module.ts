@@ -21,7 +21,7 @@ import { ExperienceComponent } from './ResourceHumaine/experience/experience.com
 import { PlanificationdutyComponent } from './ResourceHumaine/planificationduty/planificationduty.component';
 import { ReclamationComponent } from './ResourceHumaine/reclamation/reclamation.component';
 import { SkillsComponent } from './ResourceHumaine/skills/skills.component';
-import { EditDutyComponent } from './ResourceHumaine/duty/edit-duty/edit-duty.component';
+import { EditDutyComponent } from './ResourceHumaine/Duty/edit-duty/edit-duty.component';
 import { DeleteDutyComponent } from './ResourceHumaine/duty/delete-duty/delete-duty.component';
 import {ListDutyComponent} from "./ResourceHumaine/Duty/list-duty/list-duty.component";
 import {AddDutyComponent} from "./ResourceHumaine/Duty/add-duty/add-duty.component";

@@ -8,5 +8,5 @@ export interface PlanificationDuty {
   user: User;
   isActive: boolean;
   duty: Duty;
-  reclamationList:Reclamation[];
+  // reclamationList:Reclamation[];
 }

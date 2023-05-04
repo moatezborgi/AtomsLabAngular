@@ -20,17 +20,17 @@
             <div class="row align-items-center">
               <div class="col">
                 <div class="doctor-table-blk">
-                  <h3>Username</h3>
+         <!--         <h3>Username</h3>-->
                   <div class="doctor-search-blk">
                     <div class="top-nav-search table-search-blk">
-                      <form [formGroup]="usernameForm" (ngSubmit)="handleSearch()">
-                        <input class="form-control" type="text" formControlName="username" >
-<!--                        <button class="btn btn-primary doctor-refresh ms-2" type="submit">search</button>-->
-                        <div class="add-group">
-                        </div>
-                        <button type="submit" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></button>
+<!--                      <form [formGroup]="usernameForm" (ngSubmit)="handleSearch()">-->
+<!--                        <input class="form-control" type="text" formControlName="username" >-->
+<!--&lt;!&ndash;                        <button class="btn btn-primary doctor-refresh ms-2" type="submit">search</button>&ndash;&gt;-->
+<!--                        <div class="add-group">-->
+<!--                        </div>-->
+<!--                        <button type="submit" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></button>-->
 
-                      </form>
+<!--                      </form>-->
                     </div>
                   </div>
                 </div>
@@ -51,8 +51,10 @@
           <!--              </form>-->
           <!--            </div>-->
           <!--          </div>           -->
-          <full-calendar [options]="calendarOptions"></full-calendar>
-
+<!--          <full-calendar [options]="calendarOptions"></full-calendar>-->
+          <div class="container">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+          </div>
         </div>
 <!--        <div class="card-box mb-0">-->
 <!--          <div class="row">-->

@@ -1,1 +1,88 @@
-<p>edit-duty works!</p>
+<div class="page-wrapper">
+  <div class="content">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Update Duty</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form #dutyForm="ngForm">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-heading">
+                    <h4>Modifier Garde</h4>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Date Debut<span class="login-danger">*</span></label>
+                    <input name="dateHeureDebut" [(ngModel)]="dutyPlanificationDTO.duty.dateHeureDebut" class="form-control" type="datetime-local" placeholder="Entrer le date debut" required>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Date Fin<span class="login-danger">*</span></label>
+                    <input name="dateHeureFin" [(ngModel)]="dutyPlanificationDTO.duty.dateHeureFin" class="form-control" type="datetime-local" placeholder="Entrer le date fin" required>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Type:<span class="login-danger">*</span></label>
+                    <select class="form-control select" name="type" [(ngModel)]="dutyPlanificationDTO.duty.type" required>
+                      <option *ngFor="let type of types" [value]="type">{{type}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Date Planification<span class="login-danger">*</span></label>
+                    <input name="datePlanification" [(ngModel)]="dutyPlanificationDTO.planificationDuty.datePlanification" class="form-control" type="date" disabled>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Status:<span class="login-danger">*</span></label>
+                    <select class="form-control select" name="isActive" [(ngModel)]="dutyPlanificationDTO.planificationDuty.active" disabled>
+                      <option [value]="true" [selected]="true">Activer</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="doctor-submit text-end">
+                  <button type="submit" class="btn btn-primary submit-form me-2" (click)="updateduty(dutyForm.value)">Ajouter Garde</button>
+                  <button routerLink="/DutyList" type="submit" class="btn btn-primary cancel-form">Annuler</button>
+                </div>
+              </div>
+            </form>
+<!--            <div class="col-12">-->
+<!--              <div class="doctor-submit text-end">-->
+
+<!--                <button type="submit" class="btn btn-primary submit-form me-2"  (click)="updateduty(dutyForm.value)">Ajouter Garde</button>-->
+<!--                <button routerLink="/DutyList" type="submit" class="btn btn-primary cancel-form">Annuler</button>-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

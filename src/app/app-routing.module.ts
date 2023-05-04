@@ -10,6 +10,7 @@ import {ListDutyComponent} from "./ResourceHumaine/Duty/list-duty/list-duty.comp
 import {AddDutyComponent} from "./ResourceHumaine/Duty/add-duty/add-duty.component";
 import {ListHolidayComponent} from "./ResourceHumaine/Holiday/list-holiday/list-holiday.component";
 import {CalendarComponent} from "./ResourceHumaine/Calendar/calendar/calendar.component";
+import {EditDutyComponent} from "./ResourceHumaine/Duty/edit-duty/edit-duty.component";
 
 const routes: Routes = [
   {
@@ -43,17 +44,20 @@ const routes: Routes = [
     component:SettingsAnalaysisComponent
   },
   {
-    path:"DutyList",
+    path:"DutyList/:username",
     component:ListDutyComponent
   },{
-    path:"AddDuty",
+    path:"AddDuty/:username",
     component:AddDutyComponent
+  },{
+    path:"UpdateDuty/:id/:username",
+    component:EditDutyComponent
   },
   {
-    path:"HolidayList",
+    path:"HolidayList/:username",
     component:ListHolidayComponent
   },{
-    path:"Calendar",
+    path:"Calendar/:username",
     component:CalendarComponent
   }
 ];

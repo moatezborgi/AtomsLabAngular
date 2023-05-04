@@ -1,6 +1,5 @@
 <div class="page-wrapper">
   <div class="content">
-
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
@@ -17,51 +16,62 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form #d="ngForm">
+            <form #dutyForm="ngForm">
               <div class="row">
                 <div class="col-12">
                   <div class="form-heading">
                     <h4>Ajouter Garde</h4>
                   </div>
                 </div>
+
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-forms">
                     <label>Date Debut<span class="login-danger">*</span></label>
-                    <input name="dateHeureDebut" ngModel class="form-control" type="date" placeholder="Entrer le date debut">
+                    <input name="dateHeureDebut" [(ngModel)]="dutyPlanificationDTO.duty.dateHeureDebut" class="form-control" type="datetime-local" placeholder="Entrer le date debut" required>
                   </div>
                 </div>
+
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-forms">
                     <label>Date Fin<span class="login-danger">*</span></label>
-                    <input name="dateHeureFin" ngModel class="form-control" type="date" placeholder="Entrer le date fin">
+                    <input name="dateHeureFin" [(ngModel)]="dutyPlanificationDTO.duty.dateHeureFin" class="form-control" type="datetime-local" placeholder="Entrer le date fin" required>
                   </div>
                 </div>
+
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-forms">
-                    <label>Type:</label>
-                    <select class="form-control select" name="type" [(ngModel)]="selectedType">
+                    <label>Type:<span class="login-danger">*</span></label>
+                    <select class="form-control select" name="type" [(ngModel)]="dutyPlanificationDTO.duty.type" required>
                       <option *ngFor="let type of types" [value]="type">{{type}}</option>
                     </select>
                   </div>
                 </div>
-                <form #h="ngForm" [formGroup]="usernameForm" ]>
+
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-forms">
-                    <label>Username:</label>
-                    <select class="form-control select" name="username" >
-                      <option  *ngFor="let type1 of ids" [value]="type1">{{type1}}</option>
+                    <label>Date Planification<span class="login-danger">*</span></label>
+                    <input name="datePlanification" [(ngModel)]="dutyPlanificationDTO.planificationDuty.datePlanification" class="form-control" type="date" disabled>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Status:<span class="login-danger">*</span></label>
+                    <select class="form-control select" name="isActive" [(ngModel)]="dutyPlanificationDTO.planificationDuty.active" disabled>
+                      <option [value]="true" [selected]="true">Activer</option>
                     </select>
                   </div>
                 </div>
-                </form>
-              </div>
-              <div class="col-12">
-                <div class="doctor-submit text-end">
-                  <button type="submit" class="btn btn-primary submit-form me-2"  (click)="assignduty(d.value)">Ajouter Garde</button>
-                  <button routerLink="/DutyList" type="submit" class="btn btn-primary cancel-form">Annuler</button>
-                </div>
               </div>
             </form>
+
+            <div class="col-12">
+              <div class="doctor-submit text-end">
+
+                <button type="submit" class="btn btn-primary submit-form me-2"  (click)="assignduty(dutyForm.value)">Ajouter Garde</button>
+                <button routerLink="/DutyList" type="submit" class="btn btn-primary cancel-form">Annuler</button>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -69,30 +79,3 @@
     </div>
   </div>
 </div>
-<!--<div id="add_event" class="modal fade" role="dialog">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content modal-md">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Add Event</h4>-->
-<!--        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <form>-->
-<!--          <div class="form-group">-->
-<!--            <label>Event Name <span class="text-danger">*</span></label>-->
-<!--            <input class="form-control" type="text">-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label>Event Date <span class="text-danger">*</span></label>-->
-<!--            <div class="cal-icon">-->
-<!--              <input class="form-control datetimepicker" type="text">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="m-t-20 text-center">-->
-<!--            <button class="btn btn-primary submit-btn">Create Event</button>-->
-<!--          </div>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

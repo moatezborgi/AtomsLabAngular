@@ -9,6 +9,7 @@ import {DatePipe} from "@angular/common";
   styleUrls: ['./list-holiday.component.css']
 })
 export class ListHolidayComponent {
+  username: any;
   constructor(private aRoute:ActivatedRoute,
               private route:Router,
               private holidayService:HolidayService,
@@ -16,8 +17,9 @@ export class ListHolidayComponent {
   list:any;
   table: any;
   ngOnInit(): void {
+    this.username=this.aRoute.snapshot.params['username']
     //this.dutyService.Dutylist().subscribe(k =>{this.table=k});
-    this.holidayService.Holidaylist().subscribe((data) => {
+    this.holidayService.HolidaylistbyUser(this.username).subscribe((data) => {
       // Parcourir la liste des devoirs et formater les dates de début et de fin
       this.table = data.map((holiday) => ({
         ...holiday,
