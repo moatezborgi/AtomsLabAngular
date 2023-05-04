@@ -24,6 +24,9 @@
                 </div>
                 <h2>S'authentifier</h2>
 
+                <div *ngIf="badCredentials" class="alert alert-danger" role="alert">
+                  Nom d'utilisateur ou mot de passe incorrect.
+                </div>
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
                   <div class="form-group">
                     <label>Nom d'utilisateur <span class="login-danger">*</span></label>
@@ -42,8 +45,10 @@
                        <div class="invalid-tooltip"*ngIf="loginForm.get('password')?.errors?.['required']">
                         Mot de passe obligatoire
                       </div>
+
                      </div>
                   </div>
+
                   <div class="forgotpass">
 
                     <a routerLink="/resetpassword">Mot de passe oublié ?</a>

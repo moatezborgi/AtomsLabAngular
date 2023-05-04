@@ -8,15 +8,16 @@ import {
 import { Observable } from 'rxjs';
 import {AuthService} from "./auth.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {VariablesService} from "../UserManagementService/UserService/variables.service";
 
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private variables:VariablesService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const token = this.authService.getToken();
+    const token = localStorage.getItem('token');
     const helper = new JwtHelperService();
     if (!helper.isTokenExpired(token)) {
       request = request.clone({
@@ -24,7 +25,9 @@ export class JwtInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${token}`
         }
       });
+      console.log(request);
     }
+
 
 
     return next.handle(request);

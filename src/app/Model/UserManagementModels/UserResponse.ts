@@ -1,3 +1,5 @@
+import {Role} from "./Role";
+
 export class UserResponse {
   id_user!: number;
   username!: string;
@@ -12,5 +14,5 @@ export class UserResponse {
   hiringDate!: Date;
   jobPost!: string;
   dateTimeLastConnexion!: Date;
-  role!: string;
+  role!: Role;
 }

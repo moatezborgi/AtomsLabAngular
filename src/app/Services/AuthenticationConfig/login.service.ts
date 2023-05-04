@@ -26,18 +26,7 @@ export class LoginService {
       username: authRequest.username,
       password: authRequest.password
     }
-    return this.http.post(this.host+"/authentication/authenticate",test ,{observe:'response'});/*.subscribe(response => {
-      const test=JSON.stringify(response.body);
-      const test1=JSON.parse(test);
-      console.log(test1.token);
-      response=test1.token;
-
-      // log the response object to the console
-      // do something with the response here
-    }, error => {
-      console.error(error); // log any errors to the console
-      // handle the error here
-    });*/
+    return this.http.post(this.host+"/authentication/authenticate",test ,{observe:'response'})
   }
 
   logout(){
@@ -86,6 +75,7 @@ export class LoginService {
         const user=JSON.stringify(data);
         const user1=JSON.parse(user);
         localStorage.setItem('user', user1);
+
       });
     }
     throw new Error("token is null");

@@ -7,6 +7,7 @@ import {NotFoundComponent} from "./Shared/not-found/not-found.component";
 import {ResetPasswordComponent} from "./UserAccount/reset-password/reset-password.component";
  import {SettingsAnalaysisComponent} from "./Biologiste/settings-analaysis/settings-analaysis.component";
 import {RetrieveUsersComponent} from "./UserAccount/retrieve-users/retrieve-users.component";
+import {ForgetPasswordComponent} from "./UserAccount/forget-password/forget-password.component";
 
 const routes: Routes = [
   {
@@ -35,7 +36,12 @@ const routes: Routes = [
   {
     path:"resetpassword",
     component:ResetPasswordComponent
-  },{
+  },
+  {
+    path:"forgetpassword",
+    component:ForgetPasswordComponent
+  },
+  {
     path:"SettingsAnalaysis",
     component:SettingsAnalaysisComponent
   },{

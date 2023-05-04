@@ -20,6 +20,8 @@ import {JwtInterceptor} from "./Services/AuthenticationConfig/jwt.interceptor";
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import { RetrieveUsersComponent } from './UserAccount/retrieve-users/retrieve-users.component';
 import {ErrorInterceptorService} from "./Helper/error-interceptor.service";
+import { ForgetPasswordComponent } from './UserAccount/forget-password/forget-password.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -34,7 +36,8 @@ import {ErrorInterceptorService} from "./Helper/error-interceptor.service";
     NotFoundComponent,
     ResetPasswordComponent,
     SettingsAnalaysisComponent,
-    RetrieveUsersComponent
+    RetrieveUsersComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -43,22 +46,18 @@ import {ErrorInterceptorService} from "./Helper/error-interceptor.service";
     ToastrModule.forRoot(),
     FormsModule,
     HttpClientModule,
+    MatSnackBarModule,
     DataTablesModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS,
-  useClass: ErrorInterceptorService,
-  multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptorService, multi: true},
     {
-    provide: WebSocketServiceService,
-    useFactory: (client: Client) => {
-      return new WebSocketServiceService(client);
-    },
-    deps: [Client]
+    provide: WebSocketServiceService, useFactory: (client: Client) => {return new WebSocketServiceService(client); },    deps: [Client]
   },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService, // add JwtHelperService to the providers array
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: Client,
       useValue: Stomp.client('ws://localhost:9999/socket')

@@ -5,6 +5,9 @@ import {LoginService} from "../../Services/AuthenticationConfig/login.service";
 import {AuthenticationRequest} from "../../Model/UserManagementModels/AuthenticationRequest";
 import {UserService} from "../../Services/UserManagementService/UserService/user.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {ResetPasswordService} from "../../Services/UserManagementService/UserService/reset-password.service";
+import {UserResponse} from "../../Model/UserManagementModels/UserResponse";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -12,6 +15,8 @@ import {JwtHelperService} from "@auth0/angular-jwt";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  curUser!:UserResponse;
+  badCredentials:boolean=false;
   private helper = new JwtHelperService();
   private _loginForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -22,7 +27,7 @@ export class LoginComponent implements OnInit {
     return this._loginForm;
   }
 
-  constructor(private formBuilder: FormBuilder,  private router: Router,  private loginService: LoginService, private userService:UserService) {
+  constructor(private formBuilder: FormBuilder,private snackBar: MatSnackBar,  private router: Router,  private loginService: LoginService, private userService:UserService, private resetPasswordService:ResetPasswordService) {
   }
 
   ngOnInit() {
@@ -33,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     if(this.loginService.isLoginIn()==true) {
 
-      this.router.navigate(["pages/dashboard"]);
+      this.router.navigate(["/home"]);
     }
   }
 
@@ -53,20 +58,18 @@ export class LoginComponent implements OnInit {
           const username = this.helper.decodeToken(test1.token).sub;
           console.log(username);
           localStorage.setItem('username', username);
-          /*const username = this.helper.decodeToken(test1.token).sub;
-          console.log(username);
-          const user=this.userService.loadUserByUsername(username);
-          console.log(user);
-          const data=JSON.stringify(user);
-          const user1=JSON.parse(data);
-          console.log(user1);
-          localStorage.setItem('user', user1);*/
-
           this.router.navigate(['/home']);
-        });
+        }
+        , error => {
+          console.error(error);
+          if (error.status === 400) {
+            const errorMessage = error.toString(); // Assuming the error message is returned in the "message" field of the response body
+          // handle the error here
+            this.badCredentials=true;
+        };
+    })
+  }
     }
 
-
-  }
 }
 

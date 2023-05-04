@@ -12,12 +12,13 @@ export class ErrorInterceptorService {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 || error.status === 403) {
-          // Redirige vers la page de connexion si l'utilisateur est non authentifié ou pas autorisé
-          this.router.navigate(['/error'], { state: { code: error.status, message: error.message } });
+        switch (error.status) {
+          case 401:
+          case 403:
+            // Redirige vers la page de connexion si l'utilisateur est non authentifié ou pas autorisé
+            this.router.navigate(['/error'], { state: { code: error.status, message: error.message } });
+            break;
 
-        } else {
-           this.router.navigate(['/error'], { state: { code: error.status, message: error.message } });
         }
         return throwError(error);
       })

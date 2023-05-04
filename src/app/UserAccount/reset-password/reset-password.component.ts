@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {ResetPasswordService} from "../../Services/UserManagementService/UserService/reset-password.service";
+import {map} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-reset-password',
@@ -14,19 +17,24 @@ export class ResetPasswordComponent implements OnInit {
     return this._reserForm;
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router,private resetPassword:ResetPasswordService,private http:HttpClient) {
   }
 
   ngOnInit(): void {
     this._reserForm = this.formBuilder.group({
       username: new FormControl('', [Validators.required]),
     });
+
   }
 
-  onSubmit(): void {
+  onSubmit(form:any): void {
     if (this._reserForm.valid) {
       // Rediriger vers la page d'accueil
-      this.router.navigate(['/home']);
+      console.log(form.username)
+
+     let res = this.resetPassword.forgotPassword(form.username)
+      console.log(res)
     }
   }
+
 }
