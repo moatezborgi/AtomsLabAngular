@@ -18,8 +18,8 @@ export class UpdateReactifComponent implements OnInit {
   ngOnInit() {
   }
 
-  updateReactif(data:any){
-    this.reactifService.updateInvoice(this.aRoute.snapshot.params['id'],data)
+   updateReactif(data:any){
+    this.reactifService.updateReactif(this.aRoute.snapshot.params['id'],data)
   .subscribe(()=>this.route.navigate(['ReactifList']))
 }
 

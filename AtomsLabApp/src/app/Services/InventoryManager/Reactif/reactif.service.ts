@@ -23,10 +23,10 @@ export class ReactifService {
   }
 
   deleteReactif(id: any) {
-    return this.http.delete(this.baseUrl + 'deletereactif/' + id);
+    return this.http.delete(this.baseUrl + 'deletereactif/' +id);
   }
 
-  updateInvoice(data: any, id: any):Observable<Reactif> {
-    return this.http.put<Reactif>(this.baseUrl + 'updatereactif/' +id, data);
+  updateReactif(id:any,data:any):Observable<Reactif> {
+    return this.http.post<Reactif>(this.baseUrl + 'updatereactif/' +id, data);
   }
 }

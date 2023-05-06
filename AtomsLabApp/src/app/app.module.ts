@@ -20,6 +20,10 @@ import { AddReactifComponent } from './InventaireManager/Reactif/add-reactif/add
 import { ListReactifComponent } from './InventaireManager/Reactif/list-reactif/list-reactif.component';
 import { DeleteReactifComponent } from './InventaireManager/Reactif/delete-reactif/delete-reactif.component';
 import { UpdateReactifComponent } from './InventaireManager/Reactif/update-reactif/update-reactif.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -45,7 +49,11 @@ import { UpdateReactifComponent } from './InventaireManager/Reactif/update-react
     ToastrModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    MatDialogModule,
+    NgbModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule
   ],
   providers: [  {
     provide: WebSocketServiceService,

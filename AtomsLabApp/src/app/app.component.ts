@@ -11,7 +11,9 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent {
   title = 'AtomsLabApp';
 
-  constructor(private router: Router,private webSocketService: WebSocketServiceService,private toastr: ToastrService) {}
+  constructor(private router: Router,
+              private webSocketService: WebSocketServiceService,
+              private toastr: ToastrService) {}
   isLoginPage() {
     return this.router.url === '/login';
   }
