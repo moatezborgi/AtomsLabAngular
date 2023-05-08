@@ -31,7 +31,7 @@
                         </form>
                       </div>
                       <div class="add-group">
-                        <a href="add-schedule.html" class="btn btn-primary add-pluss ms-2"><img src="assets/img/icons/plus.svg" alt=""></a>
+                        <a [routerLink]="['/AddHoliday/hamdayedes']" class="btn btn-primary add-pluss ms-2"><img src="assets/img/icons/plus.svg" alt=""></a>
                         <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
                       </div>
                     </div>
@@ -64,7 +64,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let i of table">
+                <tr *ngFor="let i of table| paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
 <!--                  <td>{{i.user.username}}</td>-->
 <!--                  <td>{{i.startDate}}</td>-->
 <!--                <td>{{i.endDate}}</td>-->
@@ -94,6 +94,8 @@
                 </tr>
                 </tbody>
               </table>
+              <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
             </div>
           </div>
         </div>

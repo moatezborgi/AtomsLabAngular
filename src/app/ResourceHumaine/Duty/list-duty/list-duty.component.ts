@@ -11,9 +11,12 @@ import Swal from "sweetalert2";
 })
 
 export class ListDutyComponent implements OnInit{
+  itemsPerPage = 10;
+  currentPage = 1;
+
   username: any;
   table: any;
-
+  status: any;
   constructor(private aRoute:ActivatedRoute,
               private route:Router,
               private dutyService:DutyService,
@@ -39,16 +42,20 @@ this.username=this.aRoute.snapshot.params['username']
         ...duty,
         dateHeureDebut: this.datePipe.transform(
           duty.duty.dateHeureDebut,
-          'yyyy-MM-dd'
+          'yyyy-MM-dd hh-mm'
         ),
-        dateHeureFin: this.datePipe.transform(duty.duty.dateHeureFin, 'yyyy-MM-dd')
+        dateHeureFin: this.datePipe.transform(duty.duty.dateHeureFin, 'yyyy-MM-dd hh-mm')
       }));
     });
   }
-  deleteDuty(id: number) {
-    if (confirm("Are you sure you want to delete this duty?")) {
+  onItemsPerPageChange(value: number) {
+    this.itemsPerPage = value;
+    this.currentPage = 1;
+  }
+  async deleteDuty(id: number) {
+   // if (confirm("Are you sure you want to delete this duty?")) {
       this.dutyService.deleteDuty(id).subscribe(
-        () => {
+        (res) => {
           // Refresh duty list
           this.dutyService.DutylistbyUser(this.username).subscribe((data) => { console.log(data)
             // Parcourir la liste des devoirs et formater les dates de début et de fin
@@ -56,21 +63,33 @@ this.username=this.aRoute.snapshot.params['username']
               ...duty,
               dateHeureDebut: this.datePipe.transform(
                 duty.duty.dateHeureDebut,
-                'yyyy-MM-dd'
+                'yyyy-MM-dd hh-mm'
               ),
-              dateHeureFin: this.datePipe.transform(duty.duty.dateHeureFin, 'yyyy-MM-dd')
+              dateHeureFin: this.datePipe.transform(duty.duty.dateHeureFin, 'yyyy-MM-dd hh-mm'),
             }));
-          });        },
+          });
+          if(res == null){
+            console.log("here delete")
+            this.alertcannotDeleteWithSuccess();
+          }else{this.alertDeleteWithSuccess()}
+          },
         (error) => {
-          console.log(error);
+          console.log("zzzzz"+error);
         }
       );
-    }
+  //  }
   }
   async alertcannotUpdatetWithSuccess() {
     const msg = await Swal.fire(
       "Cancelled",
       "Your Event is safe :)",
+      "error"
+    );
+  }
+  async alertcannotDeleteWithSuccess() {
+    const msg = await Swal.fire(
+      "Duty archived or ongoing",
+      "Your Event wont deleted :)",
       "error"
     );
   }
@@ -81,7 +100,14 @@ this.username=this.aRoute.snapshot.params['username']
       "success"
     );
   }
-  deleteEvent(id:any){
+  async alertDeleteWithSuccess() {
+    const msg = await Swal.fire(
+      "Deleted!",
+      "Your Event has been deleted.",
+      "success"
+    );
+  }
+  deleteEvent(id:number){
     Swal.fire({
       title: 'Are you sure want to remove this Event?',
       text: 'You will not be able to recover this Event!',
@@ -91,45 +117,17 @@ this.username=this.aRoute.snapshot.params['username']
       cancelButtonText: 'No, keep it',
       confirmButtonColor:'red',
     }).then(async (result) => {
-      if (result.isConfirmed) {
-        this.dutyService.deleteDuty(id).subscribe(
-          () => {
-            // Refresh duty list
-            this.dutyService.DutylistbyUser(this.username).subscribe((data) => { console.log(data)
-              // Parcourir la liste des devoirs et formater les dates de début et de fin
-              this.table = data.map((duty) => ({
-                ...duty,
-                dateHeureDebut: this.datePipe.transform(
-                  duty.duty.dateHeureDebut,
-                  'yyyy-MM-dd'
-                ),
-                dateHeureFin: this.datePipe.transform(duty.duty.dateHeureFin, 'yyyy-MM-dd')
-              }));
-            });
-            },
-          (error) => {
-            this.alertcannotUpdatetWithSuccess().then(() => {
-              console.log(error);
-            });
-          },
-          async () => {
-            await this.alertAddWithSuccess();
-          }
-        );
+      if (result.value) {
         //delete Event confirmation
-        //await this.deleteDuty(id);
-        // Swal.fire(
-        //   'Deleted!',
-        //   'Your Event has been deleted.',
-        //   'success'
-        // );
-       }// else if (result.dismiss === Swal.DismissReason.cancel) {
-      //   Swal.fire(
-      //     'Cancelled',
-      //     'Your Event is safe :)',
-      //     'error'
-      //   );
-      // }
-    });
+        await this.deleteDuty(id);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your Event is safe :)',
+          'error'
+        )
+      }
+    })
+
   }
 }

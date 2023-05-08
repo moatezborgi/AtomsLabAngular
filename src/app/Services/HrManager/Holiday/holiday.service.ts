@@ -20,8 +20,8 @@ export class HolidayService {
   HolidaylistbyUser(username: any): Observable<Holiday[]> {
     return this.http.get<Holiday[]>(this.baseUrl + 'Holidaylistbyuser/'+username);
   }
-  addassignHoliday(data: any): Observable<Holiday> {
-    return this.http.post<Holiday>(this.baseUrl + 'addassignHoliday', data);
+  addassignHoliday(data: any, username: any): Observable<Holiday> {
+    return this.http.post<Holiday>(this.baseUrl + 'addassignHoliday/'+username, data);
   }
 
   deleteHoliday(id: any) {

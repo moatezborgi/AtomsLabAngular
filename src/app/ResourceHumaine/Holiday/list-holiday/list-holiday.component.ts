@@ -9,6 +9,8 @@ import {DatePipe} from "@angular/common";
   styleUrls: ['./list-holiday.component.css']
 })
 export class ListHolidayComponent {
+  itemsPerPage = 10;
+  currentPage = 1;
   username: any;
   constructor(private aRoute:ActivatedRoute,
               private route:Router,
@@ -30,5 +32,9 @@ export class ListHolidayComponent {
         enddate: this.datePipe.transform(holiday.endDate, 'yyyy-MM-dd')
       }));
     });
+  }
+  onItemsPerPageChange(value: number) {
+    this.itemsPerPage = value;
+    this.currentPage = 1;
   }
 }

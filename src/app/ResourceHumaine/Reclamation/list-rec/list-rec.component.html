@@ -7,7 +7,7 @@
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
             <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Duty List</li>
+            <li class="breadcrumb-item active">Reclamation List</li>
           </ul>
         </div>
       </div>
@@ -24,7 +24,7 @@
                 <div class="row align-items-center">
                   <div class="col">
                     <div class="doctor-table-blk">
-                      <h3>Duty List</h3>
+                      <h3>Reclamation List</h3>
                       <div class="doctor-search-blk">
                         <div class="top-nav-search table-search-blk">
                           <form>
@@ -33,7 +33,7 @@
                           </form>
                         </div>
                         <div class="add-group">
-                          <a [routerLink]="['/AddDuty/hamdayedes']" class="btn btn-primary add-pluss ms-2"><img
+                          <a [routerLink]="['/AddRec/hamdayedes']" class="btn btn-primary add-pluss ms-2"><img
                             alt="" src="assets/img/icons/plus.svg"></a>
                           <a class="btn btn-primary doctor-refresh ms-2" ref="javascript:;"><img
                             alt="" src="assets/img/icons/re-fresh.svg"></a>
@@ -51,49 +51,50 @@
                         </div>
                       </th>
                       <th>Username</th>
-                <th>Date Debut</th>
-                <th>Date Fin</th>
+                      <th>Date Reclamation</th>
+                      <th>Description</th>
                       <th>Status</th>
-                      <th>Type</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let i of table | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
-                  <td>
-                    <div class="form-check check-tables">
-                      <input class="form-check-input" type="checkbox" value="something">
-                    </div>
-                  </td>
-                  <td class="profile-image"><img width="28" height="28" src="assets/img/profiles/avatar-01.jpg" class="rounded-circle m-r-5" alt=""> {{i.user.username}}</td>
-                  <td>{{i.dateHeureDebut}}</td>
-                  <td>{{i.dateHeureFin}}</td>
-                  <td *ngIf="i.active==true"><button class="custom-badge status-green ">{{i.active}}</button></td>
-                  <td *ngIf="i.active==false"><button class="custom-badge status-red ">{{i.active}}</button></td>
-                  <td><button class="custom-badge status-purple ">{{i.duty.type}}</button></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let i of table | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+                      <td>
+                        <div class="form-check check-tables">
+                          <input class="form-check-input" type="checkbox" value="something">
+                        </div>
+                      </td>
+                      <td class="profile-image"><img width="28" height="28" src="assets/img/profiles/avatar-01.jpg" class="rounded-circle m-r-5" alt=""> {{i.user.username}}</td>
+                      <td>{{i.dateHeureReclamation}}</td>
+                      <td>{{i.descReclamation}}</td>
+                      <td *ngIf="i.etatreclam==true"><button class="custom-badge status-green ">Traite</button></td>
+                      <td *ngIf="i.etatreclam==false"><button class="custom-badge status-red ">Non traite</button></td>
+<!--                      <td><button class="custom-badge status-purple ">{{i.duty.type}}</button></td>-->
 
-                  <td class="text-end">
-                    <div class="dropdown dropdown-action">
-                      <a aria-expanded="false" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
-                         href="#"><i class="fa fa-ellipsis-v"></i></a>
-                      <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item"  [routerLink]="['/UpdateDuty', i.idPlanificationDuty, i.user.username]">
-                          <i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                        <a class="dropdown-item" data-bs-target="#delete_patient" data-bs-toggle="modal" (click)="deleteEvent(i.idPlanificationDuty)"><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tbody>
-                </table>
+                      <td class="text-end">
+                        <div class="dropdown dropdown-action">
+                          <a aria-expanded="false" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                             href="#"><i class="fa fa-ellipsis-v"></i></a>
+                          <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item"  [routerLink]="['/UpdateDuty', i.idPlanificationDuty, i.user.username]">
+                              <i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                            <a class="dropdown-item" data-bs-target="#delete_patient" data-bs-toggle="modal" (click)="deleteEvent(i.idPlanificationDuty)"><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
+                          </div>
+                        </div>
+                      </td>
+
+
+                    </tbody>
+                  </table>
                   <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
 
                 </div>
 
 
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>

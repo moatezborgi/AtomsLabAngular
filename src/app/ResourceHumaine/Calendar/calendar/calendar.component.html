@@ -35,8 +35,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+              <div class="col-auto text-end float-end ms-auto download-grp" >
+                <a href="javascript:;" class=" me-2"  (click)="openPDF()"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
                 <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
                 <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
                 <a href="javascript:;"><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
@@ -52,8 +52,8 @@
           <!--            </div>-->
           <!--          </div>           -->
 <!--          <full-calendar [options]="calendarOptions"></full-calendar>-->
-          <div class="container">
-            <full-calendar [options]="calendarOptions"></full-calendar>
+          <div id="calendar" class="container" >
+            <full-calendar [options]="calendarOptions" ></full-calendar>
           </div>
         </div>
 <!--        <div class="card-box mb-0">-->

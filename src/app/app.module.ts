@@ -19,7 +19,7 @@ import { DataTablesModule } from "angular-datatables";
 import { EchangedutyComponent } from './ResourceHumaine/Echangeduty/echangeduty.component';
 import { ExperienceComponent } from './ResourceHumaine/experience/experience.component';
 import { PlanificationdutyComponent } from './ResourceHumaine/planificationduty/planificationduty.component';
-import { ReclamationComponent } from './ResourceHumaine/reclamation/reclamation.component';
+import {ListRecComponent}from "./ResourceHumaine/Reclamation/list-rec/list-rec.component";
 import { SkillsComponent } from './ResourceHumaine/skills/skills.component';
 import { EditDutyComponent } from './ResourceHumaine/Duty/edit-duty/edit-duty.component';
 import { DeleteDutyComponent } from './ResourceHumaine/duty/delete-duty/delete-duty.component';
@@ -33,6 +33,7 @@ import { EditHolidayComponent } from './ResourceHumaine/Holiday/edit-holiday/edi
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarComponent } from './ResourceHumaine/Calendar/calendar/calendar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -50,7 +51,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EchangedutyComponent,
     ExperienceComponent,
     PlanificationdutyComponent,
-    ReclamationComponent,
     SkillsComponent,
     EditDutyComponent,
     DeleteDutyComponent,
@@ -60,7 +60,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AddHolidayComponent,
     DeleteHolidayComponent,
     EditHolidayComponent,
-    CalendarComponent
+    CalendarComponent,
+    ListRecComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +72,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     DataTablesModule,
     FullCalendarModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [  {
     provide: WebSocketServiceService,

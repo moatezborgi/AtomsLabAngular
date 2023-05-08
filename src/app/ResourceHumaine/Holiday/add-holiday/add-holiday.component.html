@@ -1,1 +1,89 @@
-<p>add-holiday works!</p>
+<div class="page-wrapper">
+  <div class="content">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Add Holiday</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form #dutyForm="ngForm">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-heading">
+                    <h4>Ajouter Holdiday</h4>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Date Debut<span class="login-danger">*</span></label>
+                    <input name="startDate" [(ngModel)]="Holiday.startDate" class="form-control" type="date" placeholder="Entrer le date debut" required>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Date Fin<span class="login-danger">*</span></label>
+                    <input name="endDate" [(ngModel)]="Holiday.endDate" class="form-control" type="date" placeholder="Entrer le date fin" required>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Type:<span class="login-danger">*</span></label>
+                    <select class="form-control select" name="typeHoliday" [(ngModel)]="Holiday.typeHoliday" (change)="Change($event)" >
+                      <option *ngFor="let type of types" [value]="type" [selected]="selectedType === type">{{type}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Reason:<span class="login-danger">*</span></label>
+                    <textarea name="reason" ngModel class="form-control" type="text" [(ngModel)]="Holiday.reason" >
+                    </textarea>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Status:<span class="login-danger">*</span></label>
+                    <select class="form-control select" name="status" [(ngModel)]="Holiday.status" disabled>
+                      <option [value]="true" [selected]="true">Activer</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-forms">
+                    <label>Paid:<span class="login-danger">*</span></label>
+                    <select class="form-control select" name="paid" [(ngModel)]="Holiday.paid" disabled>
+                      <option [value]="true" [selected]="true">Payant</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="col-12">
+              <div class="doctor-submit text-end">
+
+                <button type="submit" class="btn btn-primary submit-form me-2"  (click)="assignduty(dutyForm.value)">Ajouter Holiday</button>
+                <button routerLink="/DutyList" type="submit" class="btn btn-primary cancel-form">Annuler</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

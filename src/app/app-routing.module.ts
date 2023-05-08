@@ -11,7 +11,8 @@ import {AddDutyComponent} from "./ResourceHumaine/Duty/add-duty/add-duty.compone
 import {ListHolidayComponent} from "./ResourceHumaine/Holiday/list-holiday/list-holiday.component";
 import {CalendarComponent} from "./ResourceHumaine/Calendar/calendar/calendar.component";
 import {EditDutyComponent} from "./ResourceHumaine/Duty/edit-duty/edit-duty.component";
-
+import {ListRecComponent}from "./ResourceHumaine/Reclamation/list-rec/list-rec.component";
+import {AddHolidayComponent} from "./ResourceHumaine/Holiday/add-holiday/add-holiday.component";
 const routes: Routes = [
   {
     path: 'home',
@@ -59,6 +60,12 @@ const routes: Routes = [
   },{
     path:"Calendar/:username",
     component:CalendarComponent
+  },{
+    path:"Reclamation/:username",
+    component:ListRecComponent
+  },{
+    path:"AddHoliday/:username",
+    component:AddHolidayComponent
   }
 ];
 

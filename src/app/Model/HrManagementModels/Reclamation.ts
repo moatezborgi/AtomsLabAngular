@@ -3,7 +3,7 @@ import {PlanificationDuty} from "./PlanificationDuty";
 
 export interface Reclamation {
   idReclamation: number;
-  DateHeureReclamation: Date;
+  dateHeureReclamation: Date;
   etatreclam: number;
   descReclamation: string;
   user: User;

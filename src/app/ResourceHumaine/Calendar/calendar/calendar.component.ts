@@ -13,6 +13,10 @@ import {DutyService} from "../../../Services/HrManager/Duty/duty.service";
 import {data, event} from "jquery";
 import {ActivatedRoute} from "@angular/router";
 import {forkJoin} from "rxjs";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import autoTable from "jspdf-autotable";
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-calendar',
@@ -24,6 +28,7 @@ export class CalendarComponent implements OnInit {
   action: String = "Add";
   usernameForm!: FormGroup;
   usernameSearch = "";
+  calendar: any;
 
   calendarOptions: CalendarOptions = {
 
@@ -41,6 +46,11 @@ export class CalendarComponent implements OnInit {
       center: "title",
       end: "dayGridMonth,timeGridWeek,timeGridDay",
       start: "prev,next today",
+    },  customButtons: {
+      downloadPDFButton: {
+        text: 'Download PDF',
+        click: () => this.downloadPDF(),
+      },
     },
     slotLabelFormat: {
       hour: 'numeric',
@@ -173,7 +183,7 @@ export class CalendarComponent implements OnInit {
     );
   }
   addNewEvent(){
-    this.eventsApi.addassignHoliday(this.calendarForm.value).subscribe(
+    this.eventsApi.addassignHoliday(this.calendarForm.value,this.username).subscribe(
       (res) => {
         console.log(this.calendarForm.value);
         this.username=this.aRoute.snapshot.params['username']
@@ -332,4 +342,48 @@ export class CalendarComponent implements OnInit {
     this.username=this.aRoute.snapshot.params['username']
     this.getAllEvents(this.username)
   }
+  downloadPDF() {
+    const calendarEl = document.getElementById('calendar');
+    // @ts-ignore
+    html2canvas(calendarEl).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      // @ts-ignore
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save('calendar.pdf');
+    });
+  }
+  // Function to download PDF from the FullCalendar
+  // downloadPDF1() {
+  //   // Create new jsPDF instance
+  //   const doc = new jsPDF();
+  //
+  //   // Get the calendar element by ID
+  //   const element = document.getElementById('calendar');
+  //
+  //   if (element) {
+  //     // Use jsPDF autotable plugin to generate table from HTML element
+  //     const html = element ? element.innerHTML : '';
+  //     doc.autoTable({ html: html });
+  //     // Save the PDF with a timestamp in the filename
+  //     const timestamp = new Date().toISOString().substring(0, 19).replace(/:/g, "-");
+  //     doc.save(`calendar_${timestamp}.pdf`);
+  //   } else {
+  //     console.error("Could not find element with ID 'calendar'");
+  //   }
+  // }
+  public openPDF(): void {
+    let DATA: any = document.getElementById('calendar');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      const date = new Date();
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save(`Calendar${date}${this.username}.pdf`);
+    });
+  }
+
 }

@@ -4,7 +4,7 @@ import {Reclamation} from "./Reclamation";
 
 export interface PlanificationDuty {
   idPlanificationDuty: number;
-  datePlanification: Date;
+  dateplanification: Date;
   user: User;
   isActive: boolean;
   duty: Duty;

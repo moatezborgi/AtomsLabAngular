@@ -37,12 +37,11 @@
                     <input name="dateHeureFin" [(ngModel)]="dutyPlanificationDTO.duty.dateHeureFin" class="form-control" type="datetime-local" placeholder="Entrer le date fin" required>
                   </div>
                 </div>
-
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-forms">
                     <label>Type:<span class="login-danger">*</span></label>
-                    <select class="form-control select" name="type" [(ngModel)]="dutyPlanificationDTO.duty.type" required>
-                      <option *ngFor="let type of types" [value]="type">{{type}}</option>
+                    <select class="form-control select" name="type" [(ngModel)]="dutyPlanificationDTO.duty.type" (change)="Change($event)" >
+                      <option *ngFor="let type of types" [value]="type" [selected]="selectedType === type">{{type}}</option>
                     </select>
                   </div>
                 </div>

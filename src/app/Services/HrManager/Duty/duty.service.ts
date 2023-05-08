@@ -36,7 +36,7 @@ export class DutyService {
   getdutyy(id: any): Observable<DutyPlanificationDTO> {
     return this.http.get<DutyPlanificationDTO>(this.baseUrl + 'PlanificationDutylistbyid/'+id);
   }
-  addDuty(dto: { duty: {  id_duty: number;dateHeureDebut: string; dateHeureFin: string; type: string }; planificationDuty: { idPlanificationDuty: number; datePlanification: string;active: boolean;  } }, username: any): Observable<void> {
+  addDuty(dto: { duty: {  id_duty: number;dateHeureDebut: string; dateHeureFin: string; type: any }; planificationDuty: { idPlanificationDuty: number; datePlanification: string;active: boolean;  } }, username: any): Observable<void> {
     return this.http.post<void>(this.baseUrl + 'PlanifierDutyToUser/'+username,dto);
   }
   JustaddDuty(data: any): Observable<Duty> {
