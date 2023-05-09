@@ -1,0 +1,133 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Ajouter formation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card-box">
+          <h4 class="card-title">Formation</h4>
+          <form [formGroup]="_trainingForm"  (ngSubmit)="add(_trainingForm.value)">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">descTraining:</label>
+
+              <div class="col-md-9">
+                <input formControlName="descriptioncourse" type="text" class="form-control">
+                <div *ngIf="courseForm.get('descTraining')?.['touched'] && _trainingForm.get('descTraining')?.['invalid']">
+                  <div class="invalid-tooltip" *ngIf="_trainingForm.get('descTraining')?.errors?.['required']">
+                    Ce champ est obligatire
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label">Start date</label>
+                <div class="col-md-9">
+                  <input formControlName="name" type="date" class="form-control">
+                  <div *ngIf="_trainingForm.get('Start date')?.['touched'] && _trainingForm.get('Start date')?.['invalid']">
+                    <div class="invalid-tooltip" *ngIf="_trainingForm.get('Start date')?.errors?.['required']">
+                      Ce champ est obligatire
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label">End date</label>
+                <div class="col-md-9">
+                  <input formControlName="name" type="date" class="form-control">
+                  <div *ngIf="_trainingForm.get('End date')?.['touched'] && _trainingForm.get('End date')?.['invalid']">
+                    <div class="invalid-tooltip" *ngIf="_trainingForm.get('End date')?.errors?.['required']">
+                      Ce champ est obligatire
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label">Subject</label>
+                <div class="col-md-9">
+                  <input formControlName="name" type="text" class="form-control">
+                  <div *ngIf="_trainingForm.get('Subject')?.['touched'] && _trainingForm.get('Subject')?.['invalid']">
+                    <div class="invalid-tooltip" *ngIf="_trainingForm.get('Subject')?.errors?.['required']">
+                      Ce champ est obligatire
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label">Tentative</label>
+                <div class="col-md-9">
+                  <input formControlName="name" type="text" class="form-control">
+                  <div *ngIf="_trainingForm.get('Tentative')?.['touched'] && _trainingForm.get('Tentative')?.['invalid']">
+                    <div class="invalid-tooltip" *ngIf="_trainingForm.get('Tentative')?.errors?.['required']">
+                      Ce champ est obligatire
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">MinScore</label>
+                  <div class="col-md-9">
+                    <input formControlName="name" type="text" class="form-control">
+                    <div *ngIf="_trainingForm.get('MinScore')?.['touched'] && _trainingForm.get('MinScore')?.['invalid']">
+                      <div class="invalid-tooltip" *ngIf="_trainingForm.get('MinScore')?.errors?.['required']">
+                        Ce champ est obligatire
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              </div>
+
+            <div class="text-end">
+              <button type="submit" class="btn btn-primary" >Ajouter</button>
+
+            </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-box">
+          <div class="page-table-header mb-2">
+            <div class="row align-items-center">
+              <div class="col">
+
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table   id="samplingtable" class="table border-0 custom-table comman-table datatable mb-0">
+              <thead>
+
+              </thead>
+              <tbody >
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div id="delete_patient" class="modal fade delete-modal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <img src="assets/img/sent.png" alt="" width="50" height="46">
+        <h3>Are you sure want to delete this ?</h3>
+        <div class="m-t-20"> <a href="#" class="btn btn-white" data-bs-dismiss="modal">Close</a>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

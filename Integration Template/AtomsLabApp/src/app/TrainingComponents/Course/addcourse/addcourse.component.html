@@ -1,0 +1,100 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Ajouter course</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card-box">
+          <h4 class="card-title">Courses</h4>
+          <form [formGroup]="courseForm"  (ngSubmit)="add(courseForm.value)">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Description :</label>
+
+              <div class="col-md-9">
+                <input formControlName="descriptioncourse" type="text" class="form-control">
+                <div *ngIf="courseForm.get('descriptioncourse')?.['touched'] && courseForm.get('descriptioncourse')?.['invalid']">
+                  <div class="invalid-tooltip" *ngIf="courseForm.get('descriptioncourse')?.errors?.['required']">
+                    Ce champ est obligatire
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label">Nom :</label>
+              <div class="col-md-9">
+                <input formControlName="name" type="text" class="form-control">
+                <div *ngIf="courseForm.get('name')?.['touched'] && courseForm.get('name')?.['invalid']">
+                  <div class="invalid-tooltip" *ngIf="courseForm.get('name')?.errors?.['required']">
+                    Ce champ est obligatire
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label">URl :</label>
+              <div class="col-md-9">
+                <input formControlName=" fileUrl" type="text" class="form-control">
+                <div *ngIf="courseForm.get(' fileUrl')?.['touched'] && courseForm.get(' fileUrl')?.['invalid']">
+                  <div class="invalid-tooltip" *ngIf="courseForm.get(' fileUrl')?.errors?.['required']">
+                    Ce champ est obligatire
+                  </div>
+                </div>
+              </div>
+              </div>
+
+            </div>
+
+            <div class="text-end">
+              <button type="submit" class="btn btn-primary" >Ajouter</button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-box">
+          <div class="page-table-header mb-2">
+            <div class="row align-items-center">
+              <div class="col">
+
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table   id="samplingtable" class="table border-0 custom-table comman-table datatable mb-0">
+              <thead>
+
+              </thead>
+              <tbody >
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div id="delete_patient" class="modal fade delete-modal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <img src="assets/img/sent.png" alt="" width="50" height="46">
+        <h3>Are you sure want to delete this ?</h3>
+        <div class="m-t-20"> <a href="#" class="btn btn-white" data-bs-dismiss="modal">Close</a>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

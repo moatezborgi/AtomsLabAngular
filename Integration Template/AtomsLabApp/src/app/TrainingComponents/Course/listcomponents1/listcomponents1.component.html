@@ -1,0 +1,48 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card-box">
+          <div class="table-responsive">
+            <table   id="samplingtable" class="table border-0 custom-table comman-table datatable mb-0">
+
+          <h2>List of Courses</h2>
+             <table>
+              <thead >
+              <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>File</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let course of course">
+                <td >{{ course.idcourse }}</td>
+                <td >{{ course.name }}</td>
+                <td >{{ course.descriptioncourse }}</td>
+                <td>{{ course.fileUrl }}</td>
+                <td><i (click)="updatecourse(course.idcourse)" class="fa-solid fa-pen"></i> </td>
+                <td><i (click)="deletecourse(course.idcourse)" class="fa-solid fa-trash"></i> </td>
+              </tr>
+              </tbody>
+            </table>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
