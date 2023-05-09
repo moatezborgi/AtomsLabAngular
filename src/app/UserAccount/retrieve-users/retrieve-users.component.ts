@@ -127,7 +127,7 @@ this.userService.enableUserAcount(id_user).subscribe(
 )
    }
    disableUser(id_user: number) {
-     /*this.userService.desableUserAcount(id_user).subscribe(
+     this.userService.desableUserAcount(id_user).subscribe(
        response => {
          console.log(response)
          // Handle the response from the server
@@ -146,12 +146,12 @@ this.userService.enableUserAcount(id_user).subscribe(
            icon: 'error'
          });
        }
-     )*/
-     Swal.fire({
+     )
+     /*Swal.fire({
        title: 'Disabled ',
        text: 'User Account Disabled',
        icon: 'success'
-     });
+     });*/
    }
 
 

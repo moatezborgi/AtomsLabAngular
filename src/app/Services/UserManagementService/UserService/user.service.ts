@@ -37,11 +37,11 @@ export class UserService {
     return this.http.get<UserResponse>(`${this.host}/username/${username}`);
   }
   enableUserAcount(id:number) {
-    return this.http.put(`${this.host}/enable/${id}`,null);
+    return this.http.post(`${this.host}/enable/${id}`,null);
   }
 
   desableUserAcount(id:number) {
-    return this.http.put(`${this.host}/disable/${id}`,null);
+    return this.http.post(`${this.host}/disable/${id}`,null);
   }
 
   save(user:UserDto) {
@@ -77,5 +77,11 @@ export class UserService {
     console.log(usern);
 
     return this.loadUserByUsername(usern);
+  }
+
+
+  updatePassword(username: string, newPassword: string): Observable<UserResponse> {
+    const url = `${this.host}/updatePassword/${username}/${newPassword}`;
+    return this.http.post<UserResponse>(url, null);
   }
 }

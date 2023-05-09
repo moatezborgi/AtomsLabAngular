@@ -10,6 +10,7 @@ import {RetrieveUsersComponent} from "./UserAccount/retrieve-users/retrieve-user
 import {ForgetPasswordComponent} from "./UserAccount/forget-password/forget-password.component";
 import {UserFromComponent} from "./UserAccount/user-from/user-from.component";
 import {AuthGuard} from "./Services/AuthenticationConfig/auth.guard";
+import {ChangePasswordComponent} from "./UserAccount/change-password/change-password.component";
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
     path:"users",
     component:RetrieveUsersComponent
     , canActivate: [AuthGuard], data: { roles: ['[ROLE_ADMIN]'] }
+  },
+  {
+    path:"changePassword",
+    component:ChangePasswordComponent
   }
 ];
 

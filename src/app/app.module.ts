@@ -25,6 +25,7 @@ import { UserFromComponent } from './UserAccount/user-from/user-from.component';
 import {RouterModule} from "@angular/router";
 import {AuthGuard} from "./Services/AuthenticationConfig/auth.guard";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import { ChangePasswordComponent } from './UserAccount/change-password/change-password.component';
 
 
 
@@ -41,7 +42,8 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     SettingsAnalaysisComponent,
     RetrieveUsersComponent,
     ForgetPasswordComponent,
-    UserFromComponent
+    UserFromComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
