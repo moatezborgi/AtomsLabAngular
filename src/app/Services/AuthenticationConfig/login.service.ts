@@ -50,7 +50,8 @@ export class LoginService {
       }
     );    this.jwtToken="";
     localStorage.removeItem('token')
-    localStorage.removeItem('userId')
+    localStorage.removeItem('username')
+    localStorage.removeItem('user')
 
   }
 

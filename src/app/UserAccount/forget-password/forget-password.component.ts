@@ -4,6 +4,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ResetPasswordService} from "../../Services/UserManagementService/UserService/reset-password.service";
 import {ResesPasswordRequest} from "../../Model/UserManagementModels/ResesPasswordRequest";
 import {HttpClient, HttpResponse} from "@angular/common/http";
+import {Role} from "../../Model/UserManagementModels/Role";
+import {RoleService} from "../../Services/UserManagementService/RoleService/role.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-forget-password',
@@ -18,7 +21,7 @@ export class ForgetPasswordComponent implements OnInit{
     return this._reserForm;
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router,private resetPassword:ResetPasswordService,private activatedRoute: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder,private router: Router,private resetPassword:ResetPasswordService,private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -36,9 +39,28 @@ export class ForgetPasswordComponent implements OnInit{
     if (this._reserForm.valid) {
       const resetPasswordRequest= new ResesPasswordRequest(this.token,form.password1)
       // Rediriger vers la page d'accueil
+      console.log(form.password1,form.password2)
+      this.resetPassword.resetPassword(resetPasswordRequest).subscribe(
+        response => {
+          console.log(response)
+          // Handle the response from the server
+          Swal.fire({
+            title: 'Changed ',
+            text: 'Your Password has been changed succesfully',
+            icon: 'success'
+          });
+          this.router.navigate(['/home']);
+        },
+        error => {
+          console.log(error)
 
-      //this.resetPassword.resetPassword(resetPasswordRequest)
-      this.router.navigate(['/home']);
+          Swal.fire({
+            title: 'Error ',
+            text: error.error,
+            icon: 'error'
+          });
+        }
+      )
     }
   }
 

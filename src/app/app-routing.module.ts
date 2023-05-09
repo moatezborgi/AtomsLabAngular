@@ -8,6 +8,8 @@ import {ResetPasswordComponent} from "./UserAccount/reset-password/reset-passwor
  import {SettingsAnalaysisComponent} from "./Biologiste/settings-analaysis/settings-analaysis.component";
 import {RetrieveUsersComponent} from "./UserAccount/retrieve-users/retrieve-users.component";
 import {ForgetPasswordComponent} from "./UserAccount/forget-password/forget-password.component";
+import {UserFromComponent} from "./UserAccount/user-from/user-from.component";
+import {AuthGuard} from "./Services/AuthenticationConfig/auth.guard";
 
 const routes: Routes = [
   {
@@ -36,6 +38,7 @@ const routes: Routes = [
   {
     path:"resetpassword",
     component:ResetPasswordComponent
+
   },
   {
     path:"forgetpassword",
@@ -44,9 +47,15 @@ const routes: Routes = [
   {
     path:"SettingsAnalaysis",
     component:SettingsAnalaysisComponent
-  },{
+  },
+  {
+    path:"userform/:username",
+    component:UserFromComponent
+  },
+  {
     path:"users",
     component:RetrieveUsersComponent
+    , canActivate: [AuthGuard], data: { roles: ['[ROLE_ADMIN]'] }
   }
 ];
 

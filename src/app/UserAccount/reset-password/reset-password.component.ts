@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {ResetPasswordService} from "../../Services/UserManagementService/UserService/reset-password.service";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-reset-password',
@@ -34,6 +35,11 @@ export class ResetPasswordComponent implements OnInit {
 
      let res = this.resetPassword.forgotPassword(form.username)
       console.log(res)
+      Swal.fire({
+        title: 'Hello !',
+        text: 'Check your mail',
+        icon: 'info'
+      });
     }
   }
 

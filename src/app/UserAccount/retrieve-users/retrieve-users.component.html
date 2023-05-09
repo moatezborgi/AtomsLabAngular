@@ -12,6 +12,7 @@
         </div>
       </div>
     </div>
+    <button [routerLink]="['/userform', '']" type="button" class="btn btn-primary">Add User</button>
     <div class="row">
 
       <div class="col-md-12">
@@ -26,14 +27,63 @@
             </div>
           </div>
           <div class="table-responsive">
-            <table   id="Userstable" class="table border-0 custom-table comman-table datatable mb-0">
-              <thead>
+            <div class="row">
+              <div class="col-md-4">
+                <input type="text" class="form-control mb-3" placeholder="Search" (keyup)="onSearch($event)">
+              </div>
+            </div>
 
-              </thead>
-              <tbody >
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>CIN</th>
+                  <th>Phone Number</th>
+                  <th>Mail</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Job Post</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let row of filteredRows">
+                  <td>{{ row.username }}</td>
+                  <td>{{ row.cin }}</td>
+                  <td>{{ row.phoneNumber }}</td>
+                  <td>{{ row.mail }}</td>
+                  <td>{{ row.fname }}</td>
+                  <td>{{ row.lname }}</td>
+                  <td>{{ row.jobPost }}</td>
+                  <td>{{ row.role }}</td>
+                  <td class="text-end">
+                    <div class="dropdown dropdown-action">
+                      <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                      <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" (click)="modifierUser(row.username)"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                        <a *ngIf="!row.accountStatus " class="dropdown-item" (click)="enableUser(row.id_user)" data-bs-toggle="modal" data-bs-target="#delete_patient"><i class="fa fa-trash-alt m-r-5"></i> enable</a>
+                        <a *ngIf="row.accountStatus " class="dropdown-item" (click)="disableUser(row.id_user)" data-bs-toggle="modal" data-bs-target="#delete_patient"><i class="fa fa-trash-alt m-r-5"></i> disable</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
 
-              </tbody>
-            </table>
+            <div class="row justify-content-center">
+              <div class="col-md-4">
+                <div class="pagination">
+                  <button class="btn btn-secondary" [disabled]="page.pageNumber === 0" (click)="onPage({ pageNumber: page.pageNumber - 1 })">Previous</button>
+                  <span class="mx-3">{{ page.pageNumber + 1 }} / {{ page.totalPages }}</span>
+                  <button class="btn btn-secondary" [disabled]="page.pageNumber === page.totalPages - 1" (click)="onPage({ pageNumber: page.pageNumber + 1 })">Next</button>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </div>

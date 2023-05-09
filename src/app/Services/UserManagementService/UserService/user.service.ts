@@ -3,9 +3,10 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {UserResponse} from "../../../Model/UserManagementModels/UserResponse";
 import {VariablesService} from "./variables.service";
-import {error} from "jquery";
+import { map } from 'rxjs/operators';
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Role} from "../../../Model/UserManagementModels/Role";
+import {UserDto} from "../../../Model/UserManagementModels/UserDto";
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +44,10 @@ export class UserService {
     return this.http.put(`${this.host}/disable/${id}`,null);
   }
 
-  save(user:any):Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${this.host}/`, user);
+  save(user:UserDto) {
+    return this.http.post<UserResponse>(`${this.host}/`, user,{observe:'response'})
   }
+
 
   updateUser(id:number, user:any):Observable<UserResponse> {
     return this.http.put<UserResponse>(`${this.host}/${id}`, user);

@@ -21,7 +21,10 @@ import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import { RetrieveUsersComponent } from './UserAccount/retrieve-users/retrieve-users.component';
 import {ErrorInterceptorService} from "./Helper/error-interceptor.service";
 import { ForgetPasswordComponent } from './UserAccount/forget-password/forget-password.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserFromComponent } from './UserAccount/user-from/user-from.component';
+import {RouterModule} from "@angular/router";
+import {AuthGuard} from "./Services/AuthenticationConfig/auth.guard";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 
 
@@ -37,7 +40,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ResetPasswordComponent,
     SettingsAnalaysisComponent,
     RetrieveUsersComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    UserFromComponent
   ],
   imports: [
     BrowserModule,
@@ -46,10 +50,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ToastrModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    MatSnackBarModule,
-    DataTablesModule
-  ],
+    DataTablesModule,
+    NgxDatatableModule
+   ],
+  exports: [RouterModule],
+
   providers: [
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 
     {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptorService, multi: true},

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Role} from "../../../Model/UserManagementModels/Role";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +17,8 @@ export class RoleService {
     return this.http.post(`${this.host}/`, role);
   }
 
-  retrieveRoles() {
-    return this.http.get(`${this.host}/`);
+  retrieveRoles():Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.host}/`);
   }
 
   retrieveRoleById(id:number) {
