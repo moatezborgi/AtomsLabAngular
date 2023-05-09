@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {Message, WebSocketServiceService} from "./Services/WebSocketServices/web-socket-service.service";
 import { ToastrService } from 'ngx-toastr';
+import {UserResponse} from "./Model/UserManagementModels/UserResponse";
+import {UserService} from "./Services/UserManagementService/UserService/user.service";
 
 @Component({
   selector: 'app-root',
@@ -10,10 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent {
   title = 'AtomsLabApp';
-
-  constructor(private router: Router,
-              private webSocketService: WebSocketServiceService,
-              private toastr: ToastrService) {}
+  curUser!:UserResponse;
+  constructor(private router: Router,private webSocketService: WebSocketServiceService,private toastr: ToastrService,  private userService: UserService) {}
   isLoginPage() {
     return this.router.url === '/login';
   }
@@ -22,6 +22,10 @@ export class AppComponent {
   }
   isResetPage(){
     return this.router.url === '/resetpassword';
+
+  }
+  isResetPage2(){
+    return this.router.url.includes('/forgetpassword');
 
   }
 
@@ -36,9 +40,17 @@ export class AppComponent {
 
       });
      }
-
+    this.userService.currentUser().subscribe(
+      user=>this.curUser=user
+    )
+    console.log(this.curUser)
   }
-
+  /*currentUserCredentials(){
+    this.userService.currentUser().subscribe(
+      user=>this.curUser=user
+    )
+    console.log(this.curUser)
+  }*/
 
 
 }

@@ -14,16 +14,19 @@ import {NotFoundComponent} from "./Shared/not-found/not-found.component";
 import {ResetPasswordComponent} from "./UserAccount/reset-password/reset-password.component";
 import { ToastrModule } from 'ngx-toastr';
  import { SettingsAnalaysisComponent } from './Biologiste/settings-analaysis/settings-analaysis.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { DataTablesModule } from "angular-datatables";
-import { AddReactifComponent } from './InventaireManager/Reactif/add-reactif/add-reactif.component';
-import { ListReactifComponent } from './InventaireManager/Reactif/list-reactif/list-reactif.component';
-import { DeleteReactifComponent } from './InventaireManager/Reactif/delete-reactif/delete-reactif.component';
-import { UpdateReactifComponent } from './InventaireManager/Reactif/update-reactif/update-reactif.component';
-import {MatDialogModule} from "@angular/material/dialog";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import {NgxPaginationModule} from 'ngx-pagination';
+import {JwtInterceptor} from "./Services/AuthenticationConfig/jwt.interceptor";
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
+import { RetrieveUsersComponent } from './UserAccount/retrieve-users/retrieve-users.component';
+import {ErrorInterceptorService} from "./Helper/error-interceptor.service";
+import { ForgetPasswordComponent } from './UserAccount/forget-password/forget-password.component';
+import { UserFromComponent } from './UserAccount/user-from/user-from.component';
+import {RouterModule} from "@angular/router";
+import {AuthGuard} from "./Services/AuthenticationConfig/auth.guard";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import { ChangePasswordComponent } from './UserAccount/change-password/change-password.component';
+
 
 
 @NgModule({
@@ -37,10 +40,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NotFoundComponent,
     ResetPasswordComponent,
     SettingsAnalaysisComponent,
-    AddReactifComponent,
-    ListReactifComponent,
-    DeleteReactifComponent,
-    UpdateReactifComponent
+    RetrieveUsersComponent,
+    ForgetPasswordComponent,
+    UserFromComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -50,18 +53,20 @@ import {NgxPaginationModule} from 'ngx-pagination';
     FormsModule,
     HttpClientModule,
     DataTablesModule,
-    MatDialogModule,
-    NgbModule,
-    Ng2SearchPipeModule,
-    NgxPaginationModule
-  ],
-  providers: [  {
-    provide: WebSocketServiceService,
-    useFactory: (client: Client) => {
-      return new WebSocketServiceService(client);
-    },
-    deps: [Client]
+    NgxDatatableModule
+   ],
+  exports: [RouterModule],
+
+  providers: [
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptorService, multi: true},
+    {
+    provide: WebSocketServiceService, useFactory: (client: Client) => {return new WebSocketServiceService(client); },    deps: [Client]
   },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService, // add JwtHelperService to the providers array
     {
       provide: Client,
       useValue: Stomp.client('ws://localhost:9999/socket')

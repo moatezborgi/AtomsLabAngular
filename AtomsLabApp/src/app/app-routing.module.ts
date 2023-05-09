@@ -6,10 +6,11 @@ import {ChatComponent} from "./chat/chat.component";
 import {NotFoundComponent} from "./Shared/not-found/not-found.component";
 import {ResetPasswordComponent} from "./UserAccount/reset-password/reset-password.component";
  import {SettingsAnalaysisComponent} from "./Biologiste/settings-analaysis/settings-analaysis.component";
-import {ListReactifComponent} from "./InventaireManager/Reactif/list-reactif/list-reactif.component";
-import {AddReactifComponent} from "./InventaireManager/Reactif/add-reactif/add-reactif.component";
-import {DeleteReactifComponent} from "./InventaireManager/Reactif/delete-reactif/delete-reactif.component";
-import {UpdateReactifComponent} from "./InventaireManager/Reactif/update-reactif/update-reactif.component";
+import {RetrieveUsersComponent} from "./UserAccount/retrieve-users/retrieve-users.component";
+import {ForgetPasswordComponent} from "./UserAccount/forget-password/forget-password.component";
+import {UserFromComponent} from "./UserAccount/user-from/user-from.component";
+import {AuthGuard} from "./Services/AuthenticationConfig/auth.guard";
+import {ChangePasswordComponent} from "./UserAccount/change-password/change-password.component";
 
 const routes: Routes = [
   {
@@ -38,26 +39,28 @@ const routes: Routes = [
   {
     path:"resetpassword",
     component:ResetPasswordComponent
-  },{
+
+  },
+  {
+    path:"forgetpassword",
+    component:ForgetPasswordComponent
+  },
+  {
     path:"SettingsAnalaysis",
     component:SettingsAnalaysisComponent
-  }
-  // --------------------- InventoryManager
-  ,{
-  path:"ReactifList",
-  component:ListReactifComponent
   },
   {
-    path:"addReactif",
-    component:AddReactifComponent
+    path:"userform/:username",
+    component:UserFromComponent
   },
   {
-    path:"deleteReactif/:id",
-    component:DeleteReactifComponent
+    path:"users",
+    component:RetrieveUsersComponent
+    , canActivate: [AuthGuard], data: { roles: ['[ROLE_ADMIN]'] }
   },
   {
-    path:"updateReactif/:id",
-    component:UpdateReactifComponent
+    path:"changePassword",
+    component:ChangePasswordComponent
   }
 ];
 
