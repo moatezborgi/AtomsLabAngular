@@ -34,6 +34,10 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarComponent } from './ResourceHumaine/Calendar/calendar/calendar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
+ import { FilterPipe } from './pipes/filter.pipe';
+import { AddRecComponent } from './ResourceHumaine/Reclamation/add-rec/add-rec.component';
+import { EditRecComponent } from './ResourceHumaine/Reclamation/edit-rec/edit-rec.component';
+import { DeleteRecComponent } from './ResourceHumaine/Reclamation/delete-rec/delete-rec.component';
 
 
 
@@ -61,7 +65,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DeleteHolidayComponent,
     EditHolidayComponent,
     CalendarComponent,
-    ListRecComponent
+    ListRecComponent,
+    FilterPipe,
+    AddRecComponent,
+    EditRecComponent,
+    DeleteRecComponent
   ],
   imports: [
     BrowserModule,

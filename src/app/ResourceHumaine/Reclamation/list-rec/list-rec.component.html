@@ -28,7 +28,7 @@
                       <div class="doctor-search-blk">
                         <div class="top-nav-search table-search-blk">
                           <form>
-                            <input class="form-control" placeholder="Search here" type="text">
+                            <input class="form-control" placeholder="Search here" type="text" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}">
                             <a class="btn"><img alt="" src="assets/img/icons/search-normal.svg"></a>
                           </form>
                         </div>
@@ -54,10 +54,11 @@
                       <th>Date Reclamation</th>
                       <th>Description</th>
                       <th>Status</th>
+                      <th>Accept</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let i of table | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+                    <tr *ngFor="let i of table | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
                       <td>
                         <div class="form-check check-tables">
                           <input class="form-check-input" type="checkbox" value="something">
@@ -69,6 +70,13 @@
                       <td *ngIf="i.etatreclam==true"><button class="custom-badge status-green ">Traite</button></td>
                       <td *ngIf="i.etatreclam==false"><button class="custom-badge status-red ">Non traite</button></td>
 <!--                      <td><button class="custom-badge status-purple ">{{i.duty.type}}</button></td>-->
+                      <td *ngIf="i.etatreclam==true  && i.accept==1"><button class="custom-badge status-gray " disabled>Approved</button></td>
+                      <td *ngIf="username=='admin' && i.etatreclam==false && i.accept==0"><button class="custom-badge status-blue " (click)="Accept(i.idReclamation)">Approve</button></td>
+                      <td *ngIf="username=='admin' && i.etatreclam==false && i.accept==0"><button class="custom-badge status-blue " (click)="Reject(i.idReclamation)">Reject</button></td>
+                      <td *ngIf="i.etatreclam==true  && i.accept==-1"><button class="custom-badge status-pink " disabled>Rejected</button></td>
+                      <td *ngIf="username=='admin' && i.etatreclam==true  && i.accept==-1"></td>
+                      <td *ngIf="username=='admin' && i.etatreclam==true  && i.accept==1"></td>
+                      <td *ngIf="username!='admin' && i.etatreclam==false  && i.accept==0"><button class="custom-badge status-gray " disabled>On Hold</button></td>
 
                       <td class="text-end">
                         <div class="dropdown dropdown-action">

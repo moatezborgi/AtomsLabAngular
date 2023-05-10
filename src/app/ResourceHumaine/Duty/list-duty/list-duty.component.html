@@ -28,7 +28,7 @@
                       <div class="doctor-search-blk">
                         <div class="top-nav-search table-search-blk">
                           <form>
-                            <input class="form-control" placeholder="Search here" type="text">
+                            <input class="form-control" placeholder="Search here" type="text" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}">
                             <a class="btn"><img alt="" src="assets/img/icons/search-normal.svg"></a>
                           </form>
                         </div>
@@ -41,6 +41,13 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div *ngIf="username=='admin'"
+                       class="col-auto text-end float-end ms-auto download-grp" >
+                    <a href="javascript:;" class=" me-2"  (click)="openPDF()"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
+                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
+                    <a href="javascript:;"><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
                   </div>
                   <table class="table border-0 custom-table comman-table datatable mb-0">
                     <thead>
@@ -58,7 +65,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let i of table | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+                <tr *ngFor="let i of table | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
                   <td>
                     <div class="form-check check-tables">
                       <input class="form-check-input" type="checkbox" value="something">
@@ -78,7 +85,7 @@
                       <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item"  [routerLink]="['/UpdateDuty', i.idPlanificationDuty, i.user.username]">
                           <i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                        <a class="dropdown-item" data-bs-target="#delete_patient" data-bs-toggle="modal" (click)="deleteEvent(i.idPlanificationDuty)"><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
+                        <a class="dropdown-item" data-bs-target="#delete_patient" data-bs-toggle="modal" (click)="deleteEvent(i.idPlanificationDuty,i.duty.id_duty)"><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
                       </div>
                     </div>
                   </td>

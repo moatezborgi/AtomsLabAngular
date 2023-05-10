@@ -8,16 +8,15 @@ import {Reclamation} from "../../../Model/HrManagementModels/Reclamation";
 @Injectable({
   providedIn: 'root'
 })
-export class ReclamationService {
-  private baseUrl = environment.baseUrl + '/Reclamation/';
+export class PdfService {
+  private baseUrl = environment.baseUrl + '/PDF/';
 
 
   constructor(private http: HttpClient) {
   }
 
-  Reclamationlist(username: any): Observable<Reclamation[]> {
-    console.log( this.baseUrl + 'Reclamationlistangular1/'+username)
-    return this.http.get<Reclamation[]>(this.baseUrl + 'Reclamationlistangular1/'+username);
+  GeneratePDF(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'generate-pdf');
   }
   ALLReclamationlist(): Observable<Reclamation[]> {
     console.log( this.baseUrl + 'Reclamationlistangular')
@@ -34,8 +33,8 @@ export class ReclamationService {
     return this.http.delete(this.baseUrl + '' + id);
   }
   accept(id: any): Observable<any> {
-      return this.http.post<any>(this.baseUrl + 'AccepterReclamation/'+id,{});
-    }
+    return this.http.post<any>(this.baseUrl + 'AccepterReclamation/'+id,{});
+  }
   reject(id: any): Observable<any> {
     return this.http.post<any>(this.baseUrl + 'RejectReclamation/'+id,{});
   }

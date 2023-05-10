@@ -11,12 +11,13 @@ import {HolidayService} from "../../../Services/HrManager/Holiday/holiday.servic
 import {DutyService} from "../../../Services/HrManager/Duty/duty.service";
 
 import {data, event} from "jquery";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {forkJoin} from "rxjs";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import autoTable from "jspdf-autotable";
 import html2canvas from 'html2canvas';
+import {NotificationService} from "../../../Services/HrManager/Notification/notification.service";
 
 @Component({
   selector: 'app-calendar',
@@ -93,8 +94,9 @@ export class CalendarComponent implements OnInit {
   username: any;
 
   constructor(private aRoute:ActivatedRoute,
+              private route:Router,
     private eventsApi: HolidayService,
-  private eventsApi1: DutyService
+  private eventsApi1: DutyService,private notificationService: NotificationService
 
 ) {}
 
@@ -110,7 +112,8 @@ export class CalendarComponent implements OnInit {
       username: new FormControl("")
     });
     this.username=this.aRoute.snapshot.params['username']
-    this.getAllEvents(this.username);
+    if(this.username!="admin"){this.getAllEvents(this.username);}
+   //  hedhiii
   }
 
   initForm(){
@@ -340,7 +343,8 @@ export class CalendarComponent implements OnInit {
   handleSearch(){
     this.usernameSearch = this.usernameForm.value.username
     this.username=this.aRoute.snapshot.params['username']
-    this.getAllEvents(this.username)
+    if(this.username=="admin"){ this.getAllEvents(this.usernameSearch);}
+    else{this.getAllEvents(this.username)}
   }
   downloadPDF() {
     const calendarEl = document.getElementById('calendar');
@@ -383,7 +387,28 @@ export class CalendarComponent implements OnInit {
       const date = new Date();
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
       PDF.save(`Calendar${date}${this.username}.pdf`);
+      this.notificationService.notify('Calendar Downloaded!');
+
     });
   }
+  addev(){
+    Swal.fire({
+      title: 'Are you sure want to Reject this Reclamation?',
+      text: 'You will not be able to recover this Reclamation!',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Add Duty',
+      cancelButtonText: 'Add Holiday',
+      confirmButtonColor:'blue',
+    }).then(async (result) => {
+      if (result.value) {
+        this.route.navigate(['AddDuty/'+this.username])
 
+        //delete Event confirmation
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.route.navigate(['AddHoliday/'+this.username])
+
+      }
+    })
+  }
 }

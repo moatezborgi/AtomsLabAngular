@@ -8,4 +8,6 @@ export interface Reclamation {
   descReclamation: string;
   user: User;
   planificationDuty:PlanificationDuty;
+  accept: number;
+
 }

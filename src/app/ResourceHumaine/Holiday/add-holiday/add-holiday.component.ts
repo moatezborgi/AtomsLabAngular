@@ -6,6 +6,7 @@ import {DatePipe} from "@angular/common";
 import {FormBuilder} from "@angular/forms";
 import Swal from "sweetalert2";
 import {TypeHoliday} from "../../../Model/HrManagementModels/Holiday";
+import {NotificationService} from "../../../Services/HrManager/Notification/notification.service";
 
 @Component({
   selector: 'app-add-holiday',
@@ -39,7 +40,8 @@ export class AddHolidayComponent {
 
   constructor(private aRoute:ActivatedRoute,
               private route:Router,
-              private holidayService:HolidayService,private datePipe: DatePipe,private fb: FormBuilder) {
+              private holidayService:HolidayService,private datePipe: DatePipe,private fb: FormBuilder,
+              private notificationService: NotificationService) {
     this.currentDate = new Date();
     this.isActive = true;
     this.selectedvalue = '';
@@ -87,6 +89,8 @@ export class AddHolidayComponent {
         });
       },
       async () => {
+        this.notificationService.notify('Holiday Added!');
+
         await this.alertAddWithSuccess();
       }
     );

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DutyService} from "../../../Services/HrManager/Duty/duty.service";
 import {DatePipe} from "@angular/common";
 import {TypeDuty} from "../../../Model/HrManagementModels/Duty";
+import {NotificationService} from "../../../Services/HrManager/Notification/notification.service";
 
 @Component({
   selector: 'app-edit-duty',
@@ -33,7 +34,8 @@ export class EditDutyComponent  implements OnInit{
   types = Object.values(TypeDuty);
   constructor(private aRoute:ActivatedRoute,
               private route:Router,
-              private dutyService:DutyService,private datePipe: DatePipe) {}
+              private dutyService:DutyService,private datePipe: DatePipe
+    ,private notificationService: NotificationService) {}
   ngOnInit() {
      this.id = this.aRoute.snapshot.params['id'];
     this.username = this.aRoute.snapshot.params['username'];
@@ -74,6 +76,7 @@ export class EditDutyComponent  implements OnInit{
         });
       },
       async () => {
+        this.notificationService.notify('Duty Updated!');
         await this.alertAddWithSuccess();
       }
     );

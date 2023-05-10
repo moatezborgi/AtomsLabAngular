@@ -14,6 +14,10 @@ export class ListRecComponent {
   currentPage = 1;
   username: any;
   table: any;
+  isApproved: boolean = false;
+
+  public searchTerm: string = '';
+
   status: any;
   constructor(private aRoute:ActivatedRoute,
               private route:Router,
@@ -33,8 +37,21 @@ export class ListRecComponent {
   ngOnInit(): void {
     this.username=this.aRoute.snapshot.params['username'];
     console.log(this.username);
-
-
+    if (this.username==="admin") {
+      this.reclamationService.ALLReclamationlist().subscribe((data) => { console.log(data)
+        // Parcourir la liste des devoirs et formater les dates de début et de fin
+        this.table = data.map((reclamation) => ({
+          ...reclamation,
+          dateHeureReclamation: this.datePipe.transform(
+            reclamation.dateHeureReclamation,
+            'yyyy-MM-dd'
+          ),
+          dateDebutDuty: this.datePipe.transform(reclamation.planificationDuty.duty.dateHeureDebut, 'yyyy-MM-dd'),
+          dateFinDuty: this.datePipe.transform(reclamation.planificationDuty.duty.dateHeureFin, 'yyyy-MM-dd')
+        }));
+      });
+    }
+else{
     this.reclamationService.Reclamationlist(this.username).subscribe((data) => { console.log(data)
       // Parcourir la liste des devoirs et formater les dates de début et de fin
       this.table = data.map((reclamation) => ({
@@ -47,6 +64,7 @@ export class ListRecComponent {
         dateFinDuty: this.datePipe.transform(reclamation.planificationDuty.duty.dateHeureFin, 'yyyy-MM-dd')
       }));
     });
+  }
   }
   onItemsPerPageChange(value: number) {
     this.itemsPerPage = value;
@@ -129,5 +147,75 @@ export class ListRecComponent {
       }
     })
 
+  }
+  async Acceptrec(id: number) {
+    // if (confirm("Are you sure you want to delete this duty?")) {
+    this.reclamationService.accept(id).subscribe(
+      () => {
+        this.route.navigate(['Reclamation/'+this.username])
+        location.reload();
+      },
+      (error) => {
+        console.log("zzzzz"+error);
+      }
+    );
+    //  }
+  }
+  Accept(id:number){
+    Swal.fire({
+      title: 'Are you sure want to accpet this Reclamation?',
+      text: 'You will not be able to recover this Reclamation!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes !',
+      cancelButtonText: 'No, keep it',
+      confirmButtonColor:'green',
+    }).then(async (result) => {
+      if (result.value) {
+        //delete Event confirmation
+        await this.Acceptrec(id);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your Event is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+  async Rejectrec(id: number) {
+    // if (confirm("Are you sure you want to delete this duty?")) {
+    this.reclamationService.reject(id).subscribe(
+      () => {
+        this.route.navigate(['Reclamation/'+this.username])
+        location.reload();
+      },
+      (error) => {
+        console.log("zzzzz"+error);
+      }
+    );
+    //  }
+  }
+  Reject(id:number){
+    Swal.fire({
+      title: 'Are you sure want to Reject this Reclamation?',
+      text: 'You will not be able to recover this Reclamation!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes !',
+      cancelButtonText: 'No, keep it',
+      confirmButtonColor:'red',
+    }).then(async (result) => {
+      if (result.value) {
+        //delete Event confirmation
+        await this.Rejectrec(id);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your Event is safe :)',
+          'error'
+        )
+      }
+    })
   }
 }

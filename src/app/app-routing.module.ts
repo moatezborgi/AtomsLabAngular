@@ -13,6 +13,7 @@ import {CalendarComponent} from "./ResourceHumaine/Calendar/calendar/calendar.co
 import {EditDutyComponent} from "./ResourceHumaine/Duty/edit-duty/edit-duty.component";
 import {ListRecComponent}from "./ResourceHumaine/Reclamation/list-rec/list-rec.component";
 import {AddHolidayComponent} from "./ResourceHumaine/Holiday/add-holiday/add-holiday.component";
+import {EditHolidayComponent} from "./ResourceHumaine/Holiday/edit-holiday/edit-holiday.component";
 const routes: Routes = [
   {
     path: 'home',
@@ -66,6 +67,9 @@ const routes: Routes = [
   },{
     path:"AddHoliday/:username",
     component:AddHolidayComponent
+  },{
+    path:"UpdateHoliday/:id/:username",
+    component:EditHolidayComponent
   }
 ];
 

@@ -4,25 +4,28 @@ import {DutyService} from "../../../Services/HrManager/Duty/duty.service";
 import {TypeDuty} from "../../../Model/HrManagementModels/Duty";
 import {DatePipe} from "@angular/common";
 import Swal from "sweetalert2";
-import {FormBuilder} from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {NotificationService} from "../../../Services/HrManager/Notification/notification.service";
 
 @Component({
   selector: 'app-add-duty',
   templateUrl: './add-duty.component.html',
   styleUrls: ['./add-duty.component.css']
 })
-export class AddDutyComponent implements OnInit{
-  selectedvalue:any;
-  Change(e:any){
+export class AddDutyComponent implements OnInit {
+  selectedvalue: any;
+
+  Change(e: any) {
     console.log(e.target.value);
-  this.selectedvalue=e.target.value;
-  console.log(this.selectedvalue);
+    this.selectedvalue = e.target.value;
+    console.log(this.selectedvalue);
     localStorage.setItem('selectedvalue', this.selectedvalue); // save the selected value to localStorage
 
   }
+
   selectedType: TypeDuty = TypeDuty.NUIT;
   username: any;
-   dutyPlanificationDTO = {
+  dutyPlanificationDTO = {
     planificationDuty: {
       idPlanificationDuty: 0,
       active: true,
@@ -32,37 +35,42 @@ export class AddDutyComponent implements OnInit{
       id_duty: 0,
       dateHeureDebut: '0',
       dateHeureFin: '0',
-      type : TypeDuty.NUIT
+      type: TypeDuty.NUIT
     }
   };
   types = Object.values(TypeDuty); // Assuming you have a TypeDuty enum
-  selectedType1: String= "Desactiver ";
-  selectedType2: Date = new Date() ;
+  selectedType1: String = "Desactiver ";
+  selectedType2: Date = new Date();
   currentDate;
   isActive: boolean = true;
 
-  constructor(private aRoute:ActivatedRoute,
-              private route:Router,
-              private dutyService:DutyService,private datePipe: DatePipe,private fb: FormBuilder) {
+  constructor(private aRoute: ActivatedRoute,
+              private route: Router,
+              private dutyService: DutyService, private datePipe: DatePipe, private fb: FormBuilder,
+              private notificationService: NotificationService) {
     this.currentDate = new Date();
     this.isActive = true;
     this.selectedvalue = '';
 
   }
+
   table: any;
-  list:  any;
+  list: any;
+
   ngOnInit() {
     this.username = this.aRoute.snapshot.params['username'];
     console.log(this.currentDate);
     this.selectedvalue = localStorage.getItem('selectedvalue'); // retrieve the selected value from localStorage
-    this.Change({ target: { value: this.selectedvalue } });
+    this.Change({target: {value: this.selectedvalue}});
   }
+
   // Remove selectedType property initialization
 // Add onTypeChange method to update selectedType property
   onTypeChange(value: any) {
     this.selectedType = value;
     this.dutyPlanificationDTO.duty.type = value; // set the selected type
   }
+
   async alertcannotUpdatetWithSuccess() {
     const msg = await Swal.fire(
       "FAILED",
@@ -70,6 +78,7 @@ export class AddDutyComponent implements OnInit{
       "error"
     );
   }
+
   async alertAddWithSuccess() {
     const msg = await Swal.fire(
       "DONE",
@@ -77,15 +86,17 @@ export class AddDutyComponent implements OnInit{
       "success"
     );
   }
-   assignduty( planificationData: any) {
+
+  assignduty(planificationData: any) {
     console.log("hawhaw")
-      console.log(planificationData);
+    console.log(planificationData);
     console.log(this.dutyPlanificationDTO);
 
-     // this.dutyPlanificationDTO.duty.type = this.selectedType; // set the selected type
-     this.dutyService.addDuty(this.dutyPlanificationDTO,this.username).subscribe(
+    // this.dutyPlanificationDTO.duty.type = this.selectedType; // set the selected type
+    this.dutyService.addDuty(this.dutyPlanificationDTO, this.username).subscribe(
       () => {
-        this.route.navigate(['DutyList/'+this.username])
+        this.notificationService.notify('Duty Added!');
+        this.route.navigate(['DutyList/' + this.username])
       },
       (error) => {
         this.alertcannotUpdatetWithSuccess().then(() => {
@@ -95,7 +106,33 @@ export class AddDutyComponent implements OnInit{
       async () => {
         await this.alertAddWithSuccess();
       }
-      );
-     console.log(planificationData)
+    );
+    console.log(planificationData)
   }
 }
+  //
+  // addev(){
+  // }
+  //   Swal.fire({
+  //     title: 'Enter your name and age',
+  //     html:
+  //       '<input id="swal-input1" class="swal2-input" placeholder="Name">' +
+  //       '<input id="swal-input2" class="swal2-input" placeholder="Age">',
+  //     focusConfirm: false,
+  //     preConfirm: () => {
+  //       const name = document.getElementById('swal-input1').value
+  //       const age = document.getElementById('swal-input2').value
+  //       return { name: name, age: age }
+  //     }
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       Swal.fire({
+  //         title: `Hello, ${result.value.name}!`,
+  //         text: `You are ${result.value.age} years old.`,
+  //         icon: 'success'
+  //       })
+  //     }
+  //   })
+  // }
+
+//}

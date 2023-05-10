@@ -45,11 +45,17 @@ export class DutyService {
   deleteDuty(id: any) :Observable<any> {
     return this.http.delete(this.baseUrl + '' + id);
   }
-
+  deleteDutyduty(id: any) :Observable<any> {
+    return this.http.delete(this.baseUrl + 'removeduty/' + id);
+  }
   updateDuty(dto: { duty: {  id_duty: number;dateHeureDebut: string; dateHeureFin: string; type: string }}, id: any, username: any):Observable<PlanificationDuty> {
     return this.http.put<PlanificationDuty>(this.baseUrl + 'UpdatePlanificationDutyangular/'+id+'/'+username, dto);
   }
   updateDutydate(data: any, id: any):Observable<Duty> {
     return this.http.put<Duty>(this.baseUrl + 'UpdateDuty/'+id, data);
   }
+  mostuserchange():Observable<any>{
+    return this.http.get<any>(this.baseUrl + 'mostUserChange');
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {Message, WebSocketServiceService} from "./Services/WebSocketServices/web-socket-service.service";
 import { ToastrService } from 'ngx-toastr';
+import {NotificationService} from "./Services/HrManager/Notification/notification.service";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent {
   title = 'AtomsLabApp';
 
-  constructor(private router: Router,private webSocketService: WebSocketServiceService,private toastr: ToastrService) {}
+  constructor(private router: Router,private webSocketService: WebSocketServiceService,private toastr: ToastrService,private notificationService: NotificationService) {
+  }
   isLoginPage() {
     return this.router.url === '/login';
   }
