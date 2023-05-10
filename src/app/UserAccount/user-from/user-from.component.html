@@ -1,0 +1,143 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Dashboard </a></li>
+            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+            <li class="breadcrumb-item active">User Form</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="card-box">
+          <div class="page-table-header mb-2">
+            <div class="row align-items-center">
+              <div class="col">
+                <div class="doctor-table-blk">
+                  <h3>User Form </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+
+            <form [formGroup]="myForm" (ngSubmit)="submitForm(myForm.value)">
+              <label>Username:</label>
+              <input class="form-control" type="text" formControlName="username">
+              <div *ngIf="myForm.get('username')?.touched && myForm.get('username')?.['invalid']">
+                <div class="invalid-tooltip" *ngIf="myForm.get('username')?.errors?.['required']">
+                  Nom d'utilisateur obligatoire
+                </div>
+              </div>
+
+              <label>Password:</label>
+              <input class="form-control pass-input" type="password" formControlName="password">
+              <div *ngIf="myForm.get('password')?.touched && myForm.get('password')?.['invalid']">
+                <div class="invalid-tooltip" *ngIf="myForm.get('password')?.errors?.['required']">
+                  Mot de passe obligatoire
+                </div>
+              </div>
+
+              <br>
+
+              <div class="col-12 col-md-6 col-xl-6">
+                <div class="form-group local-forms cal-icon">
+                  <label>Date of Birth:<span class="login-danger">*</span></label>
+                  <input class="form-control" type="date" formControlName="dateBirth">
+                  <div *ngIf="myForm.get('dateBirth')?.touched && myForm.get('dateBirth')?.['invalid']">
+                    <div class="invalid-tooltip" *ngIf="myForm.get('dateBirth')?.errors?.['required']">
+                      Date de naissance obligatoire
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <label>CIN:</label>
+              <input class="form-control" type="text" formControlName="cin">
+              <div *ngIf="myForm.get('cin')?.touched && myForm.get('cin')?.['invalid']">
+                <div class="invalid-tooltip" *ngIf="myForm.get('cin')?.errors?.['required']">
+                  CIN obligatoire
+                </div>
+              </div>
+
+              <label>First Name:</label>
+              <input class="form-control" type="text" formControlName="fname">
+              <div *ngIf="myForm.get('fname')?.touched && myForm.get('fname')?.['invalid']">
+                <div class="invalid-tooltip" *ngIf="myForm.get('fname')?.errors?.['required']">
+                  Prénom obligatoire
+                </div>
+              </div>
+
+              <label>Last Name:</label>
+              <input class="form-control" type="text" formControlName="lname">
+              <div *ngIf="myForm.get('lname')?.touched && myForm.get('lname')?.['invalid']">
+                <div class="invalid-tooltip" *ngIf="myForm.get('lname')?.errors?.['required']">
+                  Nom obligatoire
+                </div>
+              </div>
+
+              <br>
+              <div class="col-12 col-md-6 col-xl-6">
+                <div class="form-group local-forms cal-icon">
+                  <label>Hiring Date:<span class="login-danger">*</span></label>
+                  <input class="form-control" type="date" formControlName="hiringDate">
+                </div>
+                <div *ngIf="myForm.get('hiringDate')?.touched && myForm.get('hiringDate')?.['invalid']">
+                  <div class="invalid-tooltip"*ngIf="myForm.get('hiringDate')?.errors?.['required']">
+                    Hiring Date is required
+                  </div>
+                </div>
+              </div>
+
+              <label>Job Post:</label>
+              <input class="form-control" type="text" formControlName="jobPost">
+              <div *ngIf="myForm.get('jobPost')?.touched && myForm.get('jobPost')?.['invalid']">
+                <div class="invalid-tooltip"*ngIf="myForm.get('jobPost')?.errors?.['required']">
+                  Job Post is required
+                </div>
+              </div>
+
+              <label>Email:</label>
+              <input class="form-control" type="email" formControlName="mail">
+              <div *ngIf="myForm.get('mail')?.touched && myForm.get('mail')?.['invalid']">
+                <div class="invalid-tooltip" *ngIf="myForm.get('mail')?.errors?.['required']">
+                  Email obligatoire
+                </div>
+                <div class="invalid-tooltip" *ngIf="myForm.get('mail')?.errors?.['email']">
+                  Format d'email invalide
+                </div>
+              </div>
+
+              <label>Phone Number:</label>
+              <input class="form-control" type="tel" formControlName="phoneNumber">
+              <div *ngIf="myForm.get('phoneNumber')?.touched && myForm.get('phoneNumber')?.invalid">
+                <div class="invalid-tooltip" *ngIf="myForm.get('phoneNumber')?.errors?.['required']">
+                  Phone number is required.
+                </div>
+                <div class="invalid-tooltip" *ngIf="myForm.get('phoneNumber')?.errors?.['pattern']">
+                  Please enter a valid phone number.
+                </div>
+              </div>
+
+              <label>Role <span class="login-danger">*</span></label>
+              <select formControlName="roleId" >
+                <option *ngFor="let role of roles" [value]="role.id_role">{{ role.desc_role }}</option>
+              </select>
+              <br>
+              <button class="btn btn-primary submit-form me-2" type="submit" >Submit</button>
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
